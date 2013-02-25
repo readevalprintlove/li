@@ -1,4 +1,4 @@
 li
 ==
 
-a beautiful thing
+> The tao is a certain kind of order, and this kind of order is not  quite what we call order when we arrange everything geometrically in boxes, or in rows. That is a very crude kind of order, but when you look at a plant it is perfectly obvious that the plant has order. We recognize at once that is not a mess, but it is not symmetrical and it is not geometrical looking. The plant looks like a Chinese drawing, because they appreciated this kind of non-symmetrical order so much that it became an integral aspect of their painting. In the Chinese language this is called li, and the character for li means the markings in jade. It also means the grain in wood and the fiber in muscle. We could say, too, that clouds have li, marble has li, Scheme has it, the human body has li. We all recognize it, and the artist copies it whether he is a landscape painter, a portrait painter, an abstract painter, or a non-objective painter. They all are trying to express the essence of li. The interesting thing is, that although we all know what it is, there is no way of defining it.
