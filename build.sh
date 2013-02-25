@@ -23,6 +23,15 @@ REVISION=${REVISION:0:${#REVISION}-9} # drop the last 9 characters
 
 TAG=r$REVISION
 
-sed -e s/LI-VERSION/0.0.0-$REVISION/ < "$VERSION_TEMPLATE" > "$VERSION_FILE"
+sed -e s/LI-VERSION/0.3.0.$REVISION/ < "$VERSION_TEMPLATE" > "$VERSION_FILE"
 
 cabal build
+
+[ -d bin ] || rm -rf bin
+[ -d bin ] || mkdir bin
+
+cp dist/build/li/li bin/
+cp src/*.scm bin/
+
+echo "Built Li to bin"
+
