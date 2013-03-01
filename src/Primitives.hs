@@ -31,8 +31,7 @@ import Data.IORef
 -- # Primitives
 
 primitives :: [(String, [LispVal] -> ThrowsError LispVal)]
-primitives = [("=:=", comparator (==)),
-              ("<", comparator (<)),
+primitives = [("<", comparator (<)),
               (">", comparator (>)),
               (">=", comparator (>=)),
               ("<=", comparator (<=)),
@@ -43,15 +42,10 @@ primitives = [("=:=", comparator (==)),
               ("string>?", str (>)),
               ("string<=?", str (<=)),
               ("string>=?", str (>=)),
-              ("head", car),
-              ("tail", cdr),
+              ("car", car),
+              ("cdr", cdr),
               ("cons", cons),
-              ("cat", cat),
-              ("not", unary fun_not),
-              ("/=", fun_not . extricate . egal),
-              ("=", egal),
-              ("len", len),
-              ("name", nom)] 
+              ("not", unary fun_not)]
 
 
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
