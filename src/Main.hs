@@ -55,7 +55,7 @@ oneshot args = do
          >>= hPutStrLn stderr
 
 repl :: IO ()
-repl = globals >>= until_ (== "quit") (prompt "vorpal> ") . printeval
+repl = globals >>= until_ (== "quit") (prompt "r7rs> ") . printeval
 
 -- # Main
 
