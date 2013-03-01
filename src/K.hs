@@ -27,30 +27,30 @@ nullK env = Continuation env Nothing Nothing Nothing Nothing
 
 cps :: Env -> LispVal -> (Env -> LispVal -> LispVal -> Maybe [LispVal] -> IOThrowsError LispVal) -> LispVal
 cps env cont@(Continuation _ _ _ _ dynWind) cps =
-    Continuation env 
-                 (Just (HostBody cps Nothing)) 
-                 (Just cont) 
-                 Nothing 
+    Continuation env
+                 (Just (HostBody cps Nothing))
+                 (Just cont)
+                 Nothing
                  dynWind
-cps env cont cps = 
-    Continuation env 
-                 (Just (HostBody cps Nothing)) 
-                 (Just cont) 
-                 Nothing 
+cps env cont cps =
+    Continuation env
+                 (Just (HostBody cps Nothing))
+                 (Just cont)
+                 Nothing
                  Nothing
 
 
 cpsArgs :: Env -> LispVal -> (Env -> LispVal -> LispVal -> Maybe [LispVal] -> IOThrowsError LispVal) -> [LispVal] -> LispVal
 cpsArgs env cont@(Continuation _ _ _ _ dynWind) cps args =
-        Continuation env 
-                     (Just (HostBody cps (Just args))) 
-                     (Just cont) 
+        Continuation env
+                     (Just (HostBody cps (Just args)))
+                     (Just cont)
                      Nothing
                      dynWind
 cpsArgs env cont cps args =
-        Continuation env 
-                     (Just (HostBody cps (Just args))) 
-                     (Just cont) 
-                     Nothing 
+        Continuation env
+                     (Just (HostBody cps (Just args)))
+                     (Just cont)
+                     Nothing
                      Nothing
 
