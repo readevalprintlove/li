@@ -27,7 +27,7 @@ import System.IO (hFlush, stderr, stdout, hPutStrLn)
 import Control.Monad.Error (runErrorT)
 import Control.Monad (liftM)
 
-import Paths_caerbannog (version)
+import Paths_li (version)
 import Data.Version (showVersion)
 
 -- # REPL
@@ -62,7 +62,7 @@ repl = globals >>= until_ (== "quit") (prompt "vorpal> ") . printeval
 main :: IO ()
 main = do args <- getArgs
           case args of
-               ["--version"] -> putStrLn ("Caerbannog " ++ showVersion version)
+               ["--version"] -> putStrLn ("Li " ++ showVersion version)
                [] -> repl
                _  -> oneshot $ args
 
