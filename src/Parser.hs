@@ -42,7 +42,7 @@ langdef :: LanguageDef ()
 langdef = emptyDef
         { P.commentStart   = "#|"
         , P.commentEnd     = "|#"
-        , P.commentLine    = "--"
+        , P.commentLine    = ";"
         , P.nestedComments = True
         , P.identStart     = letter <|> symbol
         , P.identLetter    = letter <|> digit <|> symbol
