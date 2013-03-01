@@ -87,8 +87,8 @@ eval env k args@(List [Atom "define", Atom var, form]) = do
   where rest :: Env -> LispVal -> LispVal -> Maybe [LispVal] -> IOThrowsError LispVal
         rest e c result _ = defineVar e var result >>= continue e c
 
-eval env k args@(List (Atom "λ" : List params : body)) = do
-  bound <- liftIO $ isBound env "λ"
+eval env k args@(List (Atom "lambda" : List params : body)) = do
+  bound <- liftIO $ isBound env "lambda"
   if bound
     then prepareApply env k args
     else do result <- fun0 env params body
