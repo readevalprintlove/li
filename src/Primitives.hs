@@ -23,7 +23,7 @@ import Numerics
 import Helpers
 import Egal
 import Eval (bind, eval, evalfuns)
-import Mutants (iofuns)
+import Io (iofuns)
 import Control.Monad.Error (throwError, liftIO)
 import System.IO
 import Data.IORef

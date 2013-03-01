@@ -25,11 +25,6 @@ import Data.IORef (readIORef, writeIORef, newIORef)
 isBound :: Env -> String -> IO Bool
 isBound envRef var = readIORef envRef >>= return . maybe False (const True) . lookup var
 
--- retrieve the current value of a variable
--- todo namespacing via scheme-48 modules
--- todo core and user ns by default
--- todo research s48 and ml module systems
-
 getVar :: Env -> String -> IOThrowsError LispVal
 getVar envRef var  =  do env <- liftIO $ readIORef envRef
                          maybe (throwError $ UnboundVar "Getting an unbound variable" var)
