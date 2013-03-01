@@ -1,5 +1,5 @@
 {-
-Copyright (C) 2012 Michael Fogus <me -at- fogus -dot- me>
+Copyright (C) 2013 Michael Fogus <me -at- fogus -dot- me>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
