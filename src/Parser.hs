@@ -156,8 +156,6 @@ parseExpr = lexeme parseString
           <|> parseQuasiquote
           <|> try parseUnquoteSplicing
           <|> parseUnquote
-          <|> parseVector
-          <|> parseBlock
           <|> try (parens parseList)
           <?> "Form"
 
@@ -193,33 +191,6 @@ parseUnquoteSplicing :: Parser LispVal
 parseUnquoteSplicing = do string ",@"
                           expr <- parse'
                           return $ List [Atom "unquote-splicing", expr]
-
--- # Blocks
-
-notArgSep :: LispVal -> Bool
-notArgSep (Atom sym) = sym /= "|"
-notArgSep _ = False
-
-
-parseBlock :: Parser LispVal
-parseBlock = do string "{"
-                forms <- parseList
-                char '}'
-                let args = takeWhile notArgSep (pull forms)
-                    body = List $ tail $ dropWhile notArgSep (pull forms)
-                return $ consList (Atom "λ") (List args) (if null args then forms else body)
-    where consList f s (List r) = List ([f] ++ [s] ++ r)
-
--- # Vector literal
--- *note: this produces a list ATM*
-
-parseVector :: Parser LispVal
-parseVector = do string "["
-                 elems <- parseList
-                 char ']'
-                 let trans = foldify (List [(Atom "quote"), (List [])]) (pull elems)
-                 return $ trans
-     where foldify seed elems = foldr (\acc e -> (List [(Atom "cons"), acc, e])) seed elems
 
 parseForms = do parsedList <- parseList
                 let listOfLispVal = lispValtoList parsedList
