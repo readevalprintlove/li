@@ -165,7 +165,7 @@ parse' = do _ <- ws
             return expr
 
 readOrThrow :: Parser a -> String -> ThrowsError a
-readOrThrow parser input = case parse parser "lisp" input of
+readOrThrow parser input = case parse parser "r7rs" input of
     Left err -> throwError $ Parser err
     Right val -> return val
 
