@@ -33,8 +33,11 @@ import Helpers
 
 -- The set of characters allowed within identifiers
 
-symbol :: Parser Char
-symbol = oneOf "!$%&*+-./:<=>?@^_~"
+fenced :: Parser Char
+fenced = oneOf "|"
+
+special :: Parser Char
+special = oneOf "!$%&*+-./:<=>?@^_~"
 
 -- Language
 
@@ -44,8 +47,8 @@ langdef = emptyDef
         , P.commentEnd     = "|#"
         , P.commentLine    = ";"
         , P.nestedComments = True
-        , P.identStart     = letter <|> symbol
-        , P.identLetter    = letter <|> digit <|> symbol
+        , P.identStart     = letter <|> special
+        , P.identLetter    = letter <|> digit <|> special
         , P.reservedNames  = []
         , P.caseSensitive  = True
         }
