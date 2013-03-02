@@ -34,7 +34,7 @@ import Helpers
 -- The set of characters allowed within identifiers
 
 symbol :: Parser Char
-symbol = oneOf "!#$%&|*+-/:<=>?@^_~"
+symbol = oneOf "!$%&*+-./:<=>?@^_~"
 
 -- Language
 
