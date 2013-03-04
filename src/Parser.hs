@@ -90,6 +90,9 @@ parseAtom = do atom <- identifier
                   then pzero
                   else return $ Atom atom
 
+quote :: LispVal -> LispVal
+quote val = (List [(Atom "quote"), val])
+
 parsePoundEscape :: Parser LispVal
 parsePoundEscape = do string "#"
                       ch <- parse'
@@ -98,7 +101,7 @@ parsePoundEscape = do string "#"
                                Atom "f" -> Bool False
                                Atom "true" -> Bool True
                                Atom "false" -> Bool False
-                               _   -> Bool False
+                               unknown -> quote unknown
 
 parseInteger :: Parser LispVal
 parseInteger = liftM (Number . read) $ many1 digit
