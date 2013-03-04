@@ -96,6 +96,8 @@ parsePoundEscape = do string "#"
                       return $ case ch of
                                Atom "t" -> Bool True
                                Atom "f" -> Bool False
+                               Atom "true" -> Bool True
+                               Atom "false" -> Bool False
                                _   -> Bool False
 
 parseInteger :: Parser LispVal
