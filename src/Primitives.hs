@@ -49,12 +49,13 @@ primitives = [("<", comparator (<)),
 
 
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
-predicates = [("symbol?",  unary fun_symbolp),
-              ("string?",  unary fun_stringp),
-              ("number?",  unary fun_numberp),
-              ("boolean?", unary fun_boolp),
-              ("list?",    unary fun_listp),
-              ("null?",    unary fun_emptyp)]
+predicates = [("symbol?",    unary fun_symbolp),
+              ("string?",    unary fun_stringp),
+              ("number?",    unary fun_numberp),
+              ("boolean?",   unary fun_boolp),
+              ("list?",      unary fun_listp),
+              ("procedure?", unary fun_funp),
+              ("null?",      unary fun_emptyp)]
 
 
 globals :: IO Env
@@ -88,6 +89,8 @@ fun_boolp   _                = return $ Bool False
 fun_emptyp  (List [])        = return $ Bool True
 fun_emptyp  (List _)         = return $ Bool False
 fun_emptyp  _                = return $ Bool False
+fun_funp    (Func _ _ _ _)   = return $ Bool True
+fun_funp    _                = return $ Bool False
 
 -- # car / cdr / cons
 
