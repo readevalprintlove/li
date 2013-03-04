@@ -101,7 +101,7 @@ parsePoundEscape = do string "#"
                                Atom "f" -> Bool False
                                Atom "true" -> Bool True
                                Atom "false" -> Bool False
-                               unknown -> quote unknown
+                               unknown -> quote (List [(Atom "unknown"), unknown])
 
 parseInteger :: Parser LispVal
 parseInteger = liftM (Number . read) $ many1 digit
