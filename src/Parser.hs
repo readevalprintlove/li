@@ -90,13 +90,13 @@ parseAtom = do atom <- identifier
                   then pzero
                   else return $ Atom atom
 
-parseBool :: Parser LispVal
-parseBool = do string "#"
-               ch <- oneOf "tf"
-               return $ case ch of
-                        't' -> Bool True
-                        'f' -> Bool False
-                        _   -> Bool False
+parsePoundEscape :: Parser LispVal
+parsePoundEscape = do string "#"
+                      ch <- parse'
+                      return $ case ch of
+                               Atom "t" -> Bool True
+                               Atom "f" -> Bool False
+                               _   -> Bool False
 
 parseInteger :: Parser LispVal
 parseInteger = liftM (Number . read) $ many1 digit
@@ -146,7 +146,7 @@ parseQuoted = do
 parseExpr :: Parser LispVal
 parseExpr = lexeme parseString
           <|> lexeme parseFenced
-          <|> lexeme parseBool
+          <|> lexeme parsePoundEscape
           <|> try parseAtom
           <|> try (lexeme parseFloat)
           <|> try (lexeme parseRatio)
