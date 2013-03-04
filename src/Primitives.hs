@@ -49,12 +49,12 @@ primitives = [("<", comparator (<)),
 
 
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
-predicates = [("symbol?", unary fun_symbolp),
-              ("string?", unary fun_stringp),
-              ("number?", unary fun_numberp),
-              ("bool?",   unary fun_boolp),
-              ("list?",   unary fun_listp),
-              ("empty?",  unary fun_emptyp)]
+predicates = [("symbol?",  unary fun_symbolp),
+              ("string?",  unary fun_stringp),
+              ("number?",  unary fun_numberp),
+              ("boolean?", unary fun_boolp),
+              ("list?",    unary fun_listp),
+              ("null?",    unary fun_emptyp)]
 
 
 globals :: IO Env
