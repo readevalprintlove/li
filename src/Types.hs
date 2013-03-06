@@ -98,6 +98,7 @@ showVal (Bool False) = "#f"
 showVal (Environment env) = "<environment>"
 showVal (Vector contents) = "[" ++ (show contents) ++ "]"
 showVal (List contents) = "(" ++ unwordsList contents ++ ")"
+showVal (Dotted h t) = "(" ++ unwordsList h ++ " . " ++ showVal t ++ ")"
 showVal (PrimitiveFunc _) = "<primitive>"
 showVal (Func {params = args, vararg = varargs, body = body, context = env}) =
   "(λ (" ++ unwords (map show args) ++
