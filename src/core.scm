@@ -20,4 +20,17 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 ;; this is a test
 
+(define x 0)
+
+x
+;;=> 0
+
+(begin
+  (set! x 5)
+  (+ x 1))
+;;=> 6
+
+x
+;;=> 5
+
 #t
