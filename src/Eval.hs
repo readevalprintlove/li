@@ -70,7 +70,7 @@ eval env k form@(List [Atom "if", pred, conseq, alt]) = do
               Bool False -> keval e c alt
               _ -> keval e c conseq
 
--- set!
+-- (set! <symbol> <expr>)
 eval env k args@(List [Atom "set!", Atom var, form]) = do
   bound <- liftIO $ isBound env "set!"
   if bound
@@ -79,7 +79,7 @@ eval env k args@(List [Atom "set!", Atom var, form]) = do
   where rest :: Env -> LispVal -> LispVal -> Maybe [LispVal] -> IOThrowsError LispVal
         rest e c result _ = setVar e var result >>= continue e c
 
--- define
+-- (define <symbol> <expr>)
 eval env k args@(List [Atom "define", Atom var, form]) = do
   bound <- liftIO $ isBound env "define"
   if bound
@@ -88,7 +88,7 @@ eval env k args@(List [Atom "define", Atom var, form]) = do
   where rest :: Env -> LispVal -> LispVal -> Maybe [LispVal] -> IOThrowsError LispVal
         rest e c result _ = defineVar e var result >>= continue e c
 
--- (lambda (args...) ...)
+-- (lambda (<args>) <body>)
 eval env k args@(List (Atom "lambda" : List params : body)) = do
   bound <- liftIO $ isBound env "lambda"
   if bound
@@ -96,7 +96,9 @@ eval env k args@(List (Atom "lambda" : List params : body)) = do
     else do result <- fun0 env params body
             continue env k result
 
--- begin
+-- (lambda (<args> . <more>) <body>)
+
+-- (begin <expr1> <expr2> ...)
 eval env k forms@(List (Atom "begin" : more)) = do
   bound <- liftIO $ isBound env "begin"
   if bound
