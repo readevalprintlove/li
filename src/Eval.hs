@@ -70,7 +70,7 @@ eval env k form@(List [Atom "if", pred, conseq, alt]) = do
               Bool False -> keval e c alt
               _ -> keval e c conseq
 
--- TODO: set! should take a fun
+-- set!
 eval env k args@(List [Atom "set!", Atom var, form]) = do
   bound <- liftIO $ isBound env "set!"
   if bound
@@ -79,6 +79,7 @@ eval env k args@(List [Atom "set!", Atom var, form]) = do
   where rest :: Env -> LispVal -> LispVal -> Maybe [LispVal] -> IOThrowsError LispVal
         rest e c result _ = setVar e var result >>= continue e c
 
+-- define
 eval env k args@(List [Atom "define", Atom var, form]) = do
   bound <- liftIO $ isBound env "define"
   if bound
@@ -87,12 +88,29 @@ eval env k args@(List [Atom "define", Atom var, form]) = do
   where rest :: Env -> LispVal -> LispVal -> Maybe [LispVal] -> IOThrowsError LispVal
         rest e c result _ = defineVar e var result >>= continue e c
 
+-- lambda
 eval env k args@(List (Atom "lambda" : List params : body)) = do
   bound <- liftIO $ isBound env "lambda"
   if bound
     then prepareApply env k args
     else do result <- fun0 env params body
             continue env k result
+
+-- begin
+eval env k forms@(List (Atom "begin" : more)) = do
+  bound <- liftIO $ isBound env "begin"
+  if bound
+    then prepareApply env k forms
+    else if length more == 0
+            then keval env k (Atom "nil")
+            else if length more == 1
+                    then keval env k (head more)
+                    else keval env (cpsArgs env k cpsMore $ tail more) (head more)
+    where cpsMore :: Env -> LispVal -> LispVal -> Maybe [LispVal] -> IOThrowsError LispVal
+          cpsMore e c _ args =
+            case args of
+              Just margs -> keval e c (List (Atom "begin" : margs))
+              Nothing -> throwError $ BadSpecialForm "error in begin" (Atom "nil")
 
 eval env k form@(List (_ : _)) = kapply env k form
 eval _ _ bad = throwError $ BadSpecialForm "Programmer is insufficiently polite regarding " bad
