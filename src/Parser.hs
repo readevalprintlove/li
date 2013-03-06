@@ -141,8 +141,8 @@ parseComplex = do x <- (try parseFloat <|> parseIntegral)
 parseList :: Parser LispVal
 parseList = liftM List $ sepBy parse' spaces
 
-parseDottedList :: Parser LispVal
-parseDottedList = do
+parseDotted :: Parser LispVal
+parseDotted = do
     head <- endBy parse' spaces
     tail <- char '.' >> spaces >> parse'
     return $ Dotted head tail
@@ -168,6 +168,7 @@ parseExpr = lexeme parseString
           <|> try parseUnquoteSplicing
           <|> parseUnquote
           <|> try (parens parseList)
+          <|> try (parens parseDotted)
           <?> "Form"
 
 parse' :: Parser LispVal
