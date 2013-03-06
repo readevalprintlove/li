@@ -16,7 +16,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 -}
 
-module Types 
+module Types
     ( Env
     , nullEnv
     , showVal
@@ -26,7 +26,7 @@ module Types
     , LispError(..)
     , DynamicWinders(..)
     , ThrowsError
-    , IOThrowsError) 
+    , IOThrowsError)
 where
 import Text.ParserCombinators.Parsec (ParseError)
 import Control.Monad.Error (Error, ErrorT, noMsg, strMsg, throwError)
@@ -45,7 +45,7 @@ nullEnv = newIORef []
 
 -- Scheme-like data types
 
-data DeferredCode = CodeBody [LispVal] 
+data DeferredCode = CodeBody [LispVal]
                   | HostBody { k :: (Env -> LispVal -> LispVal -> Maybe [LispVal] -> IOThrowsError LispVal),
                                   kargs :: (Maybe [LispVal])}
 
@@ -54,6 +54,7 @@ data DynamicWinders = DynamicWinders { before :: LispVal,
 
 data LispVal = Atom String
              | List [LispVal]
+             | Dotted [LispVal] LispVal
              | Vector (Array Int LispVal)
              | Number Integer
              | Environment Env
@@ -62,10 +63,10 @@ data LispVal = Atom String
              | Float Double
              | String String
              | Bool Bool
-             | PrimitiveFunc ([LispVal] -> ThrowsError LispVal) 
-             | Func { params  :: [String], 
-                      vararg  :: (Maybe String), 
-                      body    :: [LispVal], 
+             | PrimitiveFunc ([LispVal] -> ThrowsError LispVal)
+             | Func { params  :: [String],
+                      vararg  :: (Maybe String),
+                      body    :: [LispVal],
                       context :: Env}
              | Partial { fun  :: LispVal,
                          args :: [LispVal],
@@ -98,9 +99,9 @@ showVal (Environment env) = "<environment>"
 showVal (Vector contents) = "[" ++ (show contents) ++ "]"
 showVal (List contents) = "(" ++ unwordsList contents ++ ")"
 showVal (PrimitiveFunc _) = "<primitive>"
-showVal (Func {params = args, vararg = varargs, body = body, context = env}) = 
-  "(λ (" ++ unwords (map show args) ++ 
-     (case varargs of 
+showVal (Func {params = args, vararg = varargs, body = body, context = env}) =
+  "(λ (" ++ unwords (map show args) ++
+     (case varargs of
         Nothing -> ""
         Just arg -> " . " ++ arg) ++ ") ...)"
 showVal (Partial _ _ _ need) = "<partial functional needing " ++ show need ++ " more args>"
