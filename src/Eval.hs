@@ -109,7 +109,7 @@ eval env k form@(List (Atom "lambda" : Dotted params varargs : body)) = do
   bound <- liftIO $ isBound env "lambda"
   if bound
     then prepareApply env k form
-    else do result <- funN varargs env [] body
+    else do result <- funN varargs env params body
             continue env k result
 
 -- (begin <expr1> <expr2> ...)
