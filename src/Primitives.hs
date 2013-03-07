@@ -100,10 +100,10 @@ fun_funp    _                = return $ Bool False
 -- # car / cdr / cons
 
 car :: [LispVal] -> ThrowsError LispVal
-car [List []] = return $ List []    -- yuck
 car [List (x : _)] = return x
 car [Dotted [l] _] = return l
 car [String (x : _)] = return (String [x])
+car [empty@(List [])] = throwError $ TypeMismatch "list with one or more elements" empty
 car [badArg] = throwError $ TypeMismatch "pair" badArg
 car badArgList = throwError $ NumArgs 1 badArgList
 
