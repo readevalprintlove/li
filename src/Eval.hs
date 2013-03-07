@@ -105,6 +105,12 @@ eval env k args@(List (Atom "lambda" : List params : body)) = do
             continue env k result
 
 -- (lambda (<args> . <more>) <body>)
+eval env k form@(List (Atom "lambda" : Dotted params varargs : body)) = do
+  bound <- liftIO $ isBound env "lambda"
+  if bound
+    then prepareApply env k form
+    else do result <- funN varargs env [] body
+            continue env k result
 
 -- (begin <expr1> <expr2> ...)
 eval env k forms@(List (Atom "begin" : more)) = do
@@ -135,8 +141,8 @@ load :: String -> IOThrowsError [LispVal]
 load filename = (liftIO $ readFile filename) >>= liftThrows . read_
 
 makeFun args env params body = return $ Func (map showVal params) args body env
-
 fun0 = makeFun Nothing
+funN = makeFun . Just . showVal
 
 -- # apply
 
@@ -169,7 +175,6 @@ apply k (IOFunc func) args = do
 apply k (KFunc func) args = do
   func (k : args)
 
--- eliminate varargs
 apply k f@(Func params varargs body context) args =
     if num params /= num args && varargs == Nothing
     then if num args < num params
