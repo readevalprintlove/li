@@ -54,6 +54,7 @@ predicates = [("symbol?",    unary fun_symbolp),
               ("number?",    unary fun_numberp),
               ("boolean?",   unary fun_boolp),
               ("list?",      unary fun_listp),
+              ("pair?",      unary fun_dottedp),
               ("procedure?", unary fun_funp),
               ("null?",      unary fun_emptyp)]
 
@@ -75,9 +76,11 @@ fun_not   _                = return $ Bool False
 
 -- # predicates
 
-fun_emptyp, fun_symbolp, fun_numberp, fun_stringp, fun_boolp, fun_listp :: LispVal -> ThrowsError LispVal
+fun_emptyp, fun_symbolp, fun_numberp, fun_stringp, fun_boolp, fun_listp, fun_dottedp :: LispVal -> ThrowsError LispVal
 fun_listp   (List _)         = return $ Bool True
 fun_listp   _                = return $ Bool False
+fun_dottedp (Dotted _ _)   = return $ Bool True
+fun_dottedp _                = return $ Bool False
 fun_symbolp (Atom _)         = return $ Bool True
 fun_symbolp _                = return $ Bool False
 fun_numberp (Number _)       = return $ Bool True
