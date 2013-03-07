@@ -116,6 +116,7 @@ cdr badArgList = throwError $ NumArgs 1 badArgList
 cons :: [LispVal] -> ThrowsError LispVal
 cons [x1, List []] = return $ List [x1]
 cons [x, List xs] = return $ List $ x : xs
+cons [l, r] = return $ Dotted [l] r
 cons badArgList = throwError $ NumArgs 2 badArgList
 
 cat :: [LispVal] -> ThrowsError LispVal
