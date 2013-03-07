@@ -45,6 +45,7 @@ primitives = [("<", comparator (<)),
               ("car", car),
               ("cdr", cdr),
               ("cons", cons),
+              ("append", cat),
               ("not", unary fun_not)]
 
 
@@ -123,7 +124,6 @@ cat :: [LispVal] -> ThrowsError LispVal
 cat [List a, List []] = return $ List a
 cat [List [], List b] = return $ List b
 cat [List as, List bs] = return $ List (as ++ bs)
-cat [List as, List bs, List cs] = return $ List (as ++ bs ++ cs)
 cat badArgList = throwError $ NumArgs 2 badArgList
 
 len :: [LispVal] -> ThrowsError LispVal
