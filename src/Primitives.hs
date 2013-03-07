@@ -131,7 +131,3 @@ len [List []] = return $ Number 0
 len [List l] = return $ Number (fromIntegral (length l))
 len [badArg] = throwError $ TypeMismatch "list" badArg
 
-nom :: [LispVal] -> ThrowsError LispVal
-nom [s@(String _)] = return s
-nom [Atom s] = return (String s)
-nom [badArg] = throwError $ TypeMismatch "string" badArg
