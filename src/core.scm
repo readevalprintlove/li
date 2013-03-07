@@ -57,6 +57,9 @@ x
 (pair? (cons 1 2))
 ;;=> #t
 
+(cons '(a b) 'c)
+;;=> ((a b) . c)
+
 #f
 #t
 
