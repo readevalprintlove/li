@@ -101,7 +101,7 @@ showVal (List contents) = "(" ++ unwordsList contents ++ ")"
 showVal (Dotted h t) = "(" ++ unwordsList h ++ " . " ++ showVal t ++ ")"
 showVal (PrimitiveFunc _) = "<primitive>"
 showVal (Func {params = args, vararg = varargs, body = body, context = env}) =
-  "(λ (" ++ unwords (map show args) ++
+  "(lambda (" ++ unwords (map show args) ++
      (case varargs of
         Nothing -> ""
         Just arg -> " . " ++ arg) ++ ") ...)"

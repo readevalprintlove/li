@@ -93,7 +93,7 @@ eval env k form@(List (Atom "define" : List (Atom name : params) : body)) = do
   bound <- liftIO $ isBound env "define"
   if bound
     then prepareApply env k form
-    else do result <- fun0 env params body >>= defineVar env name
+    else do result <- (fun0 env params body >>= defineVar env name)
             continue env k result
 
 -- (lambda (<args>) <body>)
