@@ -96,6 +96,14 @@ eval env k form@(List (Atom "define" : List (Atom name : params) : body)) = do
     else do result <- (fun0 env params body >>= defineVar env name)
             continue env k result
 
+-- (define (<name> . <more>) <body>)
+eval env k form@(List (Atom "define" : Dotted (Atom name : params) varargs : body)) = do
+  bound <- liftIO $ isBound env "define"
+  if bound
+    then prepareApply env k form
+    else do result <- (fun0 env params body >>= defineVar env name)
+            continue env k result
+
 -- (lambda (<args>) <body>)
 eval env k args@(List (Atom "lambda" : List params : body)) = do
   bound <- liftIO $ isBound env "lambda"
