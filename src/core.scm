@@ -72,6 +72,21 @@ x
 (cdr (cons '(a b) 'c))
 ;;=> c
 
+(append '() 'a)
+;;=> a
+
+(append '(a b) '(c . d))
+;;=> (a b c . d)
+
+(append '(x) '(y))
+;;=> (x y)
+
+(append '(x) '(b c d))
+;;=> (x b c d)
+
+(append '(a (b)) '((c)))
+;;=> (a (b) (c))
+
 #f
 #t
 
