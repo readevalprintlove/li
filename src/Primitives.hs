@@ -111,7 +111,7 @@ cdr :: [LispVal] -> ThrowsError LispVal
 cdr [List (x : xs)] = return $ List xs
 cdr [Dotted _ r] = return r
 cdr [String (_ : xs)] = return (String xs)
-cdr [empty@(List [])] = throwError $ TypeMismatch "list with element" empty
+cdr [empty@(List [])] = throwError $ TypeMismatch "list with one or more elements" empty
 cdr [badArg] = throwError $ TypeMismatch "list" badArg
 cdr badArgList = throwError $ NumArgs 1 badArgList
 
