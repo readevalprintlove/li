@@ -87,6 +87,11 @@ x
 (append '(a (b)) '((c)))
 ;;=> (a (b) (c))
 
+(define (add x y) (+ x y))
+
+(add 1 2)
+;;=> 3
+
 #f
 #t
 
