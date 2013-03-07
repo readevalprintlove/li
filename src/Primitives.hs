@@ -124,6 +124,8 @@ cat :: [LispVal] -> ThrowsError LispVal
 cat [List a, List []] = return $ List a
 cat [List [], List b] = return $ List b
 cat [List as, List bs] = return $ List (as ++ bs)
+cat [List as, (Dotted l r)] = return $ Dotted (as ++ l) r
+cat [List [], r] = return $ r
 cat badArgList = throwError $ NumArgs 2 badArgList
 
 len :: [LispVal] -> ThrowsError LispVal
