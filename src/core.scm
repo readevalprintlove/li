@@ -66,6 +66,12 @@ x
 (car (cons '(a b) 'c))
 ;;=> (a b)
 
+(cdr '(1 . 2))
+;;=> 2
+
+(cdr (cons '(a b) 'c))
+;;=> c
+
 #f
 #t
 
