@@ -79,7 +79,9 @@ fun_not   _                = return $ Bool False
 fun_emptyp, fun_symbolp, fun_numberp, fun_stringp, fun_boolp, fun_listp, fun_dottedp :: LispVal -> ThrowsError LispVal
 fun_listp   (List _)         = return $ Bool True
 fun_listp   _                = return $ Bool False
-fun_dottedp (Dotted _ _)   = return $ Bool True
+fun_dottedp (Dotted _ _)     = return $ Bool True
+fun_dottedp (List [])        = return $ Bool False
+fun_dottedp (List _)         = return $ Bool True
 fun_dottedp _                = return $ Bool False
 fun_symbolp (Atom _)         = return $ Bool True
 fun_symbolp _                = return $ Bool False
