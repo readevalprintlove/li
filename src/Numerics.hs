@@ -26,7 +26,7 @@ import Helpers
 math :: (Integer -> Integer -> Integer) -> [LispVal] -> ThrowsError LispVal
 math op singleVal@[_] = throwError $ NumArgs 2 singleVal
 math op [l, r] = return (Number $ op (extricate (unpacknum l)) (extricate (unpacknum r)))
-math op args = throwError $ NumArgs 2 args
+math op args = mapM unpacknum args >>= return . Number . foldl1 op
 
 numerics :: [(String, [LispVal] -> ThrowsError LispVal)]
 numerics = [("+", math (+)),
