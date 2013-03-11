@@ -163,6 +163,14 @@ x
 (list? '(a . b))
 ;;=> #f
 
+(make-list 3 3)
+;;=> (3 3 3)
+
+(make-list 10 'a)
+;;=> (a a a a a a a a a a)
+
+(list? (make-list 3 3))
+;;=> #t
 
 #f
 #t
