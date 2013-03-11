@@ -48,6 +48,7 @@ primitives = [("<", comparator (<)),
               ("make-list", makeList),
               ("append", append),
               ("length", len),
+              ("reverse", rev),
               ("not", unary fun_not)]
 
 
@@ -141,6 +142,6 @@ len [List []] = return $ Number 0
 len [List l] = return $ Number (fromIntegral (length l))
 len [badArg] = throwError $ TypeMismatch "list" badArg
 
-reverse :: [LispVal] -> ThrowsError LispVal
-reverse [l@(List [])] = return l
+rev :: [LispVal] -> ThrowsError LispVal
+rev [l@(List [])] = return l
 
