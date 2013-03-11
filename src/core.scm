@@ -190,6 +190,16 @@ x
 (reverse '(a (b c) d (e (f))))
 ;;=> ((e (f)) d (b c) a)
 
+(zero? 0)
+;;=> #t
+
+(zero? 1)
+;;=> #f
+
+(zero? '())
+;;=> #f
+
+
 
 #f
 #t
