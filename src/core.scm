@@ -49,6 +49,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 (define (cdddar lst) (cdr (cdr (cdr (car lst)))))
 (define (cddddr lst) (cdr (cdr (cdr (cdr lst)))))
 
+(define (list-tail x k)
+  (if (zero? k)
+    x
+    (list-tail (cdr x) (- k 1))))
+
 ;; Tests
 
 (define x 0)
