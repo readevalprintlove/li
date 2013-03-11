@@ -226,6 +226,13 @@ x
 (symbol->string 'a)
 ;;=> "a"
 
+(string->symbol "A")
+;;=> A
+
+(symbol->string (string->symbol "A"))
+;;=> "A"
+
+
 
 #f
 #t
