@@ -21,7 +21,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 (define call/cc call-with-current-continuation)
 
 (define (caar lst) (car (car lst)))
-
+(define (cadr lst) (car (cdr lst)))
+(define (cdar lst) (cdr (car lst)))
+(define (cddr lst) (cdr (cdr lst)))
 
 ;; Tests
 
