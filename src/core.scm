@@ -24,6 +24,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 (define (cadr lst) (car (cdr lst)))
 (define (cdar lst) (cdr (car lst)))
 (define (cddr lst) (cdr (cdr lst)))
+(define (caaar pair) (car (car (car pair))))
+(define (caadr pair) (car (car (cdr pair))))
+(define (cadar pair) (car (cdr (car pair))))
+(define (caddr pair) (car (cdr (cdr pair))))
+(define (cdaar pair) (cdr (car (car pair))))
+(define (cdadr pair) (cdr (car (cdr pair))))
+(define (cddar pair) (cdr (cdr (car pair))))
+(define (cdddr pair) (cdr (cdr (cdr pair))))
+
 
 ;; Tests
 
