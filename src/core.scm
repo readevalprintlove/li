@@ -220,6 +220,9 @@ x
 (list)
 ;;=> ()
 
+(list-ref '(a b c d) 2)
+;;=> c
+
 
 
 #f
