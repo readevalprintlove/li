@@ -60,6 +60,7 @@ predicates = [("symbol?",    unary fun_symbolp),
               ("list?",      unary fun_listp),
               ("pair?",      unary fun_dottedp),
               ("procedure?", unary fun_funp),
+              ("zero?",      unary fun_zerop),
               ("null?",      unary fun_emptyp)]
 
 
@@ -100,6 +101,8 @@ fun_emptyp  (List _)         = return $ Bool False
 fun_emptyp  _                = return $ Bool False
 fun_funp    (Func _ _ _ _)   = return $ Bool True
 fun_funp    _                = return $ Bool False
+fun_zerop  (Number n)        = return $ Bool (n == 0)
+fun_zerop   _                = return $ Bool False
 
 -- # car / cdr / cons
 
