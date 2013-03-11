@@ -45,6 +45,7 @@ primitives = [("<", comparator (<)),
               ("car", car),
               ("cdr", cdr),
               ("cons", cons),
+              ("make-list", makeList),
               ("append", cat),
               ("not", unary fun_not)]
 
@@ -121,7 +122,7 @@ cons [l, r] = return $ Dotted [l] r
 cons badArgList = throwError $ NumArgs 2 badArgList
 
 makeList :: [LispVal] -> ThrowsError LispVal
-makeList args = return $ List args
+makeList [Number size, fill] = return $ List (take (fromIntegral size) (repeat fill))
 
 cat :: [LispVal] -> ThrowsError LispVal
 cat [List a, List []] = return $ List a
