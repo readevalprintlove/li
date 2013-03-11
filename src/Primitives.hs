@@ -47,6 +47,7 @@ primitives = [("<", comparator (<)),
               ("cons", cons),
               ("make-list", makeList),
               ("append", cat),
+              ("length", len),
               ("not", unary fun_not)]
 
 
