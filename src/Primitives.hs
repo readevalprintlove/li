@@ -64,7 +64,7 @@ predicates = [("symbol?",    unary fun_symbolp),
               ("null?",      unary fun_emptyp)]
 
 convertors :: [(String, [LispVal] -> ThrowsError LispVal)]
-convertors = [("symbol->string",      unary fun_emptyp)]
+convertors = [("symbol->string", symbolToString)]
 
 
 globals :: IO Env
@@ -82,6 +82,11 @@ globals = nullEnv >>= (flip bind $ map (funAs IOFunc) iofuns
 fun_not :: LispVal -> ThrowsError LispVal
 fun_not   (Bool v)         = return $ Bool (not v)
 fun_not   _                = return $ Bool False
+
+-- # convertors
+
+symbolToString :: [LispVal] -> ThrowsError LispVal
+symbolToString [Atom s] = return $ String s
 
 -- # predicates
 
