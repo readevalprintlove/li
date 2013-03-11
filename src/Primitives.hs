@@ -46,7 +46,7 @@ primitives = [("<", comparator (<)),
               ("cdr", cdr),
               ("cons", cons),
               ("make-list", makeList),
-              ("append", cat),
+              ("append", append),
               ("length", len),
               ("not", unary fun_not)]
 
@@ -128,13 +128,13 @@ makeList [Number size] = return $ List (take (fromIntegral size) (repeat (Number
 makeList [] = throwError $ NumArgs 1 []
 makeList badArgs = throwError $ TypeMismatch "list" (List badArgs)
 
-cat :: [LispVal] -> ThrowsError LispVal
-cat [List a, List []] = return $ List a
-cat [List [], List b] = return $ List b
-cat [List as, List bs] = return $ List (as ++ bs)
-cat [List as, (Dotted l r)] = return $ Dotted (as ++ l) r
-cat [List [], r] = return $ r
-cat badArgList = throwError $ NumArgs 2 badArgList
+append :: [LispVal] -> ThrowsError LispVal
+append [List a, List []] = return $ List a
+append [List [], List b] = return $ List b
+append [List as, List bs] = return $ List (as ++ bs)
+append [List as, (Dotted l r)] = return $ Dotted (as ++ l) r
+append [List [], r] = return $ r
+append badArgList = throwError $ NumArgs 2 badArgList
 
 len :: [LispVal] -> ThrowsError LispVal
 len [List []] = return $ Number 0
