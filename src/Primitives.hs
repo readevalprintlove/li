@@ -63,6 +63,9 @@ predicates = [("symbol?",    unary fun_symbolp),
               ("zero?",      unary fun_zerop),
               ("null?",      unary fun_emptyp)]
 
+convertors :: [(String, [LispVal] -> ThrowsError LispVal)]
+convertors = [("symbol->string",      unary fun_emptyp)]
+
 
 globals :: IO Env
 globals = nullEnv >>= (flip bind $ map (funAs IOFunc) iofuns
