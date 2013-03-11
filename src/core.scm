@@ -16,9 +16,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 |#
 
+;; Core functions
+
 (define call/cc call-with-current-continuation)
 
-;; this is a test
+(define (caar lst) (car (car lst)))
+
+
+;; Tests
 
 (define x 0)
 

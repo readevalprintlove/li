@@ -6,7 +6,7 @@ name:                li
 -- PVP summary:      +-+------- breaking API changes
 --                   | | +----- non-breaking API additions
 --                   | | | +--- code changes with no API change
-version:             0.0.0-revision81
+version:             0.0.0-revision83
 
 -- A short (one-line) description of the package.
 synopsis:            R7RS
