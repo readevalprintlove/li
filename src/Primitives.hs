@@ -87,6 +87,7 @@ fun_not   _                = return $ Bool False
 
 symbolToString :: [LispVal] -> ThrowsError LispVal
 symbolToString [Atom s] = return $ String s
+symbolToString badArgList = throwError $ NumArgs 1 badArgList
 
 -- # predicates
 
