@@ -144,4 +144,5 @@ len [badArg] = throwError $ TypeMismatch "list" badArg
 
 rev :: [LispVal] -> ThrowsError LispVal
 rev [l@(List [])] = return l
+rev [List l] = return $ List (reverse l)
 
