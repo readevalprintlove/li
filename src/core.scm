@@ -184,6 +184,11 @@ x
 (length '())
 ;;=> 0
 
+(reverse '(1 2 3))
+;;=> (3 2 1)
+
+(reverse '(a (b c) d (e (f))))
+;;=> ((e (f)) d (b c) a)
 
 
 #f
