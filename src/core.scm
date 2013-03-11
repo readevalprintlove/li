@@ -172,6 +172,10 @@ x
 (list? (make-list 3 3))
 ;;=> #t
 
+(make-list 3)
+;;=> (0 0 0)
+
+
 #f
 #t
 

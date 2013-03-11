@@ -124,6 +124,8 @@ cons badArgList = throwError $ NumArgs 2 badArgList
 makeList :: [LispVal] -> ThrowsError LispVal
 makeList [Number size, fill] = return $ List (take (fromIntegral size) (repeat fill))
 makeList [Number size] = return $ List (take (fromIntegral size) (repeat (Number 0)))
+makeList [] = throwError $ NumArgs 1 []
+makeList badArgs = throwError $ TypeMismatch "list" (List badArgs)
 
 cat :: [LispVal] -> ThrowsError LispVal
 cat [List a, List []] = return $ List a
