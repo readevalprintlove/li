@@ -120,6 +120,9 @@ cons [x, List xs] = return $ List $ x : xs
 cons [l, r] = return $ Dotted [l] r
 cons badArgList = throwError $ NumArgs 2 badArgList
 
+makeList :: [LispVal] -> ThrowsError LispVal
+makeList args = return $ List args
+
 cat :: [LispVal] -> ThrowsError LispVal
 cat [List a, List []] = return $ List a
 cat [List [], List b] = return $ List b
