@@ -71,6 +71,7 @@ globals :: IO Env
 globals = nullEnv >>= (flip bind $ map (funAs IOFunc) iofuns
                                         ++ map (funAs PrimitiveFunc) primitives
                                         ++ map (funAs PrimitiveFunc) numerics
+                                        ++ map (funAs PrimitiveFunc) convertors
                                         ++ map (funAs KFunc) evalfuns
                                         ++ map (funAs PrimitiveFunc) predicates)
     where funAs constructor (var, func) = (var, constructor func)
