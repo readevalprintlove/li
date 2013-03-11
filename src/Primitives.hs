@@ -141,3 +141,6 @@ len [List []] = return $ Number 0
 len [List l] = return $ Number (fromIntegral (length l))
 len [badArg] = throwError $ TypeMismatch "list" badArg
 
+reverse :: [LispVal] -> ThrowsError LispVal
+reverse [l@(List [])] = return l
+
