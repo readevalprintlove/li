@@ -64,7 +64,8 @@ predicates = [("symbol?",    unary fun_symbolp),
               ("null?",      unary fun_emptyp)]
 
 convertors :: [(String, [LispVal] -> ThrowsError LispVal)]
-convertors = [("symbol->string", symbolToString)]
+convertors = [("symbol->string", symbolToString),
+              ("string->symbol", stringToSymbol)]
 
 
 globals :: IO Env
@@ -88,6 +89,11 @@ fun_not   _                = return $ Bool False
 symbolToString :: [LispVal] -> ThrowsError LispVal
 symbolToString [Atom s] = return $ String s
 symbolToString badArgList = throwError $ NumArgs 1 badArgList
+
+stringToSymbol :: [LispVal] -> ThrowsError LispVal
+stringToSymbol [String s] = return $ Atom s
+stringToSymbol badArgList = throwError $ NumArgs 1 badArgList
+
 
 -- # predicates
 
