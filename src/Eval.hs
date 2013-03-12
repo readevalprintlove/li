@@ -49,6 +49,7 @@ eval :: Env -> LispVal -> LispVal -> IOThrowsError LispVal
 eval env k (List [Atom "load", String filename]) = load filename >>= liftM last . mapM (eval env (nullK env))
 
 eval env k val@(String _) = continue env k val
+eval env k val@(Character _) = continue env k val
 eval env k val@(Float _) = continue env k val
 eval env k val@(Complex _) = continue env k val
 eval env k val@(Ratio _) = continue env k val
