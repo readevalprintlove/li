@@ -55,6 +55,7 @@ primitives = [("<", comparator (<)),
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
 predicates = [("symbol?",    unary fun_symbolp),
               ("string?",    unary fun_stringp),
+              ("char?",      unary fun_charp),
               ("number?",    unary fun_numberp),
               ("boolean?",   unary fun_boolp),
               ("list?",      unary fun_listp),
@@ -110,6 +111,8 @@ fun_numberp (Number _)       = return $ Bool True
 fun_numberp _                = return $ Bool False
 fun_stringp (String _)       = return $ Bool True
 fun_stringp _                = return $ Bool False
+fun_charp (Character _)      = return $ Bool True
+fun_charp _                  = return $ Bool False
 fun_boolp   (Bool _)         = return $ Bool True
 fun_boolp   _                = return $ Bool False
 fun_emptyp  (List [])        = return $ Bool True
