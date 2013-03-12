@@ -78,6 +78,13 @@ parseString = do char '"'
                  char '"'
                  return $ String x
 
+parseCharacter :: Parser LispVal
+parseCharacter = do
+                    _ <- try (string "#\\")
+                    c <- anyChar
+                    return $ Character c
+
+
 parseFenced :: Parser LispVal
 parseFenced = do char '|'
                  x <- many $ escaped <|> noneOf "\"\\"
@@ -156,6 +163,7 @@ parseQuoted = do
 
 parseExpr :: Parser LispVal
 parseExpr = lexeme parseString
+          <|> lexeme parseCharacter
           <|> lexeme parseFenced
           <|> lexeme parsePoundEscape
           <|> try parseAtom
