@@ -258,6 +258,13 @@ x
 (string-length (make-string 100))
 ;;=> 100
 
+(string #\a) 
+;;=> "a"
+
+(string #\a #\b)
+;;=> "ab"
+
+
 
 
 #f
