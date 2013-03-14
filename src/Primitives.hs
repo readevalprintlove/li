@@ -189,5 +189,5 @@ strLen [badArg] = throwError $ TypeMismatch "list" badArg
 
 string :: [LispVal] -> ThrowsError LispVal
 string [Character c] = return $ String [c]
---string chars = return $ String chars
+string chars = return $ String (map ch chars)
 
