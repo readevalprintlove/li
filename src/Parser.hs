@@ -64,10 +64,11 @@ lexeme     = P.lexeme lexer
 
 escaped :: Parser Char
 escaped = do char '\\'                               -- a backslash
-             x <- oneOf "\\\"nrt"                    -- either backslash or doublequote
+             x <- oneOf "\\\"nrt|"                   -- either backslash or doublequote
              return $ case x of                      -- return the escaped character
                '\\' -> x
                '"'  -> x
+               '|'  -> x
                'n'  -> '\n'
                'r'  -> '\r'
                't'  -> '\t'
