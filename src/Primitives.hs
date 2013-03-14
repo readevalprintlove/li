@@ -189,5 +189,7 @@ strLen [badArg] = throwError $ TypeMismatch "list" badArg
 
 string :: [LispVal] -> ThrowsError LispVal
 string [Character c] = return $ String [c]
-string chars@(Character c : cs) = return $ String (map ch chars)
-string badArg = throwError $ TypeMismatch "char" (List badArg)
+string chars = mapM unpackchar chars >>= return . String
+
+
+--math op args = mapM unpacknum args >>= return . Number . foldl1 op
