@@ -51,7 +51,8 @@ stringFun = [("string=?", str (==)),
              ("string<?", str (<)),
              ("string>?", str (>)),
              ("string<=?", str (<=)),
-             ("string>=?", str (>=))]
+             ("string>=?", str (>=)),
+             ("make-string", makeString)]
 
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
 predicates = [("symbol?",    unary fun_symbolp),
@@ -170,3 +171,11 @@ rev :: [LispVal] -> ThrowsError LispVal
 rev [l@(List [])] = return l
 rev [List l] = return $ List (reverse l)
 rev badArgList = throwError $ NumArgs 1 badArgList
+
+-- ## String functions
+
+makeString :: [LispVal] -> ThrowsError LispVal
+makeString [Number size, Character fill] = return $ String (take (fromIntegral size) (repeat fill))
+makeString [Number size] = return $ String (take (fromIntegral size) (repeat 'z'))
+makeString [] = throwError $ NumArgs 1 []
+makeString badArgs = throwError $ TypeMismatch "string" (List badArgs)
