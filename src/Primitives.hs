@@ -185,3 +185,6 @@ strLen :: [LispVal] -> ThrowsError LispVal
 strLen [String ""] = return $ Number 0
 strLen [String s] = return $ Number (fromIntegral (length s))
 strLen [badArg] = throwError $ TypeMismatch "list" badArg
+
+string :: [LispVal] -> ThrowsError LispVal
+string [Character c] = return $ String [c]
