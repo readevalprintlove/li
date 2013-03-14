@@ -178,4 +178,4 @@ makeString :: [LispVal] -> ThrowsError LispVal
 makeString [Number size, Character fill] = return $ String (take (fromIntegral size) (repeat fill))
 makeString [Number size] = return $ String (take (fromIntegral size) (repeat 'z'))
 makeString [] = throwError $ NumArgs 1 []
-makeString badArgs = throwError $ TypeMismatch "string" (List badArgs)
+makeString badArgs = throwError $ TypeMismatch "char" (List badArgs)
