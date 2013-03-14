@@ -243,6 +243,12 @@ x
 "a\\b"
 "a\"b"
 
+(make-string 3 #\a)
+;;=> "aaa"
+
+(make-string 3)
+;;=> "zzz"
+
 
 #f
 #t
