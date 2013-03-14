@@ -47,7 +47,7 @@ nullEnv = newIORef []
 
 data DeferredCode = CodeBody [LispVal]
                   | HostBody { k :: (Env -> LispVal -> LispVal -> Maybe [LispVal] -> IOThrowsError LispVal),
-                                  kargs :: (Maybe [LispVal])}
+                               kargs :: (Maybe [LispVal])}
 
 data DynamicWinders = DynamicWinders { before :: LispVal,
                                        after :: LispVal}

@@ -37,11 +37,6 @@ primitives = [("<", comparator (<)),
               ("<=", comparator (<=)),
               ("&&", bool (&&)),
               ("||", bool (||)),
-              ("string=?", str (==)),
-              ("string<?", str (<)),
-              ("string>?", str (>)),
-              ("string<=?", str (<=)),
-              ("string>=?", str (>=)),
               ("car", car),
               ("cdr", cdr),
               ("cons", cons),
@@ -51,6 +46,12 @@ primitives = [("<", comparator (<)),
               ("reverse", rev),
               ("not", unary fun_not)]
 
+stringFun :: [(String, [LispVal] -> ThrowsError LispVal)]
+stringFun = [("string=?", str (==)),
+             ("string<?", str (<)),
+             ("string>?", str (>)),
+             ("string<=?", str (<=)),
+             ("string>=?", str (>=))]
 
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
 predicates = [("symbol?",    unary fun_symbolp),
@@ -73,6 +74,7 @@ globals :: IO Env
 globals = nullEnv >>= (flip bind $ map (funAs IOFunc) iofuns
                                         ++ map (funAs PrimitiveFunc) primitives
                                         ++ map (funAs PrimitiveFunc) numerics
+                                        ++ map (funAs PrimitiveFunc) stringFun
                                         ++ map (funAs PrimitiveFunc) convertors
                                         ++ map (funAs KFunc) evalfuns
                                         ++ map (funAs PrimitiveFunc) predicates)
