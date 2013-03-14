@@ -52,6 +52,7 @@ stringFun = [("string=?", str (==)),
              ("string>?", str (>)),
              ("string<=?", str (<=)),
              ("string>=?", str (>=)),
+             ("string-length", strLen),
              ("make-string", makeString)]
 
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
@@ -179,3 +180,8 @@ makeString [Number size, Character fill] = return $ String (take (fromIntegral s
 makeString [Number size] = return $ String (take (fromIntegral size) (repeat 'z'))
 makeString [] = throwError $ NumArgs 1 []
 makeString badArgs = throwError $ TypeMismatch "char" (List badArgs)
+
+strLen :: [LispVal] -> ThrowsError LispVal
+strLen [String ""] = return $ Number 0
+strLen [String s] = return $ Number (fromIntegral (length s))
+strLen [badArg] = throwError $ TypeMismatch "list" badArg
