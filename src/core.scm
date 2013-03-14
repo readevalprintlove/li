@@ -249,6 +249,16 @@ x
 (make-string 3)
 ;;=> "zzz"
 
+(string-length "")
+;;=> 0
+
+(string-length "a")
+;;=> 1
+
+(string-length (make-string 100))
+;;=> 100
+
+
 
 #f
 #t
