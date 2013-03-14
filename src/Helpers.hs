@@ -34,6 +34,9 @@ pull (List ary) = ary
 extricate :: ThrowsError a -> a
 extricate (Right val) = val
 
+ch :: LispVal -> Char
+ch (Character c) = c
+
 unpackstr :: LispVal -> ThrowsError String
 unpackstr (String s) = return s
 unpackstr notString = throwError $ TypeMismatch "string" notString

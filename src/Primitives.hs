@@ -53,6 +53,7 @@ stringFun = [("string=?", str (==)),
              ("string<=?", str (<=)),
              ("string>=?", str (>=)),
              ("string-length", strLen),
+             ("string", string),
              ("make-string", makeString)]
 
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
@@ -188,3 +189,5 @@ strLen [badArg] = throwError $ TypeMismatch "list" badArg
 
 string :: [LispVal] -> ThrowsError LispVal
 string [Character c] = return $ String [c]
+--string chars = return $ String chars
+
