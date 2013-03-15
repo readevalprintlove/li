@@ -16,7 +16,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 -}
 
-module Primitives (globals) 
+module Primitives (globals)
 where
 import Types
 import Numerics
@@ -191,5 +191,6 @@ string :: [LispVal] -> ThrowsError LispVal
 string [Character c] = return $ String [c]
 string chars = mapM unpackchar chars >>= return . String
 
-
+stringRef :: [LispVal] -> ThrowsError LispVal
+stringRef [String "", n] = throwError $ TypeMismatch "list" n
 --math op args = mapM unpacknum args >>= return . Number . foldl1 op
