@@ -193,5 +193,6 @@ string [Character c] = return $ String [c]
 string chars = mapM unpackchar chars >>= return . String
 
 stringRef :: [LispVal] -> ThrowsError LispVal
+
 stringRef [String "", n] = throwError $ TypeMismatch "list" n
---math op args = mapM unpacknum args >>= return . Number . foldl1 op
+

@@ -122,6 +122,7 @@ data LispError = NumArgs Integer [LispVal]
                | CallCCNoArgs String
                | TypeMismatch String LispVal
                | Parser ParseError
+               | BadArg String LispVal
                | BadSpecialForm String LispVal
                | NotFunction String String
                | UnboundVar String String
@@ -133,6 +134,7 @@ showError (BadSpecialForm message form) = message ++ ": " ++ show form
 showError (NotFunction message funcName) = message ++ ": " ++ funcName
 showError (NumArgs expected got) = "Expected " ++ show expected ++ " args; got " ++ unwordsList got
 showError (TypeMismatch expected found) = "Invalid type: expected " ++ expected ++ ", found " ++ show found
+showError (BadArg msg got) = "Bad argument: " ++ msg ++ " got " ++ show got
 showError (Parser parseErr) = "Parse error at " ++ show parseErr
 showError (CallCCBadArgs got) = "Bad call to call/cc, expected 1 argument but got [" ++ unwordsList got ++ "]"
 showError (CallCCNoArgs got) = "Incomplete call to call/cc, expected 1 argument but got " ++ got
