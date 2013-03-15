@@ -193,6 +193,6 @@ string [Character c] = return $ String [c]
 string chars = mapM unpackchar chars >>= return . String
 
 stringRef :: [LispVal] -> ThrowsError LispVal
-
+stringRef [String s, Number i] = return $ Character (s!!(fromIntegral i))
 stringRef [String "", n] = throwError $ BadArg "Cannot take from an empty string " n
 
