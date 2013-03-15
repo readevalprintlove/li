@@ -258,13 +258,14 @@ x
 (string-length (make-string 100))
 ;;=> 100
 
-(string #\a) 
+(string #\a)
 ;;=> "a"
 
 (string #\a #\b)
 ;;=> "ab"
 
-
+(string-ref "abc" 1)
+;;=> #\b
 
 #f
 #t
