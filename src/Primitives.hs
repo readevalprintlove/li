@@ -54,6 +54,7 @@ stringFun = [("string=?", str (==)),
              ("string>=?", str (>=)),
              ("string-length", strLen),
              ("string", string),
+             ("string-ref", stringRef),
              ("make-string", makeString)]
 
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
