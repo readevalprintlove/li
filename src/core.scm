@@ -309,6 +309,15 @@ x
 (list->string '())
 ;;=> ""
 
+(string-copy "abcd")
+;;=> "abcd"
+
+(string-copy "abcd" 1)
+;;=> "bcd"
+
+(string-copy "abcd" 1 2)
+;;=> "bc"
+
 
 #f
 #t

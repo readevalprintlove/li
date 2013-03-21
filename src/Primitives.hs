@@ -56,6 +56,7 @@ stringFun = [("string=?", str (==)),
              ("string", string),
              ("string-ref", stringRef),
              ("substring", stringSlice),
+             ("string-copy", stringSlice),
              ("string-append", stringCat),
              ("make-string", makeString)]
 
@@ -212,6 +213,7 @@ string [Character c] = return $ String [c]
 string chars = mapM unpackchar chars >>= return . String
 
 stringSlice :: [LispVal] -> ThrowsError LispVal
+stringSlice [String s] = return $ String s
 stringSlice [String s, Number start, Number end] = return $ String (slice s start end)
 stringSlice args@[Number _, Number _, String _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 stringSlice args@[Number _, String _, Number _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
