@@ -26,6 +26,12 @@ trap action = catchError action (return . show)
 runio :: IOThrowsError String -> IO String
 runio action = runErrorT (trap action) >>= return . extricate
 
+slice :: [a] -> Integer -> Integer -> [a]
+slice l s e = do
+    let start = fromIntegral s
+    let end   = fromIntegral e
+    (take start $ drop end $ l)
+
 -- unpackers
 
 pull :: LispVal -> [LispVal]
@@ -57,7 +63,7 @@ unary :: (a -> b) -> [a] -> b
 unary f [v] = f v
 
 boolop :: (LispVal -> ThrowsError a) -> (a -> a -> Bool) -> [LispVal] -> ThrowsError LispVal
-boolop unpacker op args = if length args /= 2 
+boolop unpacker op args = if length args /= 2
                              then throwError $ NumArgs 2 args
                              else do left <- unpacker $ args !! 0
                                      right <- unpacker $ args !! 1
