@@ -197,7 +197,7 @@ stringSlice :: [LispVal] -> ThrowsError LispVal
 stringSlice [String s, Number start, Number end] = do
   let from = fromIntegral start
   let to = fromIntegral end
-  return $ String take to $ drop from $ s
+  return $ String (take to $ drop from $ s)
 
 stringRef :: [LispVal] -> ThrowsError LispVal
 stringRef [String s, idx@(Number i)] = if ((fromIntegral i) > length s)
