@@ -202,10 +202,7 @@ string [Character c] = return $ String [c]
 string chars = mapM unpackchar chars >>= return . String
 
 stringSlice :: [LispVal] -> ThrowsError LispVal
-stringSlice [String s, Number start, Number end] = do
-  let from = fromIntegral start
-  let to = fromIntegral end
-  return $ String (take to $ drop from $ s)
+stringSlice [String s, Number start, Number end] = return $ String (slice s start end)
 stringSlice args@[Number _, Number _, String _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 stringSlice args@[Number _, String _, Number _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 stringSlice args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str num num)" (List args)
