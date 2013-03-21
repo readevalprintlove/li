@@ -297,6 +297,18 @@ x
 (string->list "abcd" 1 2)
 ;;=> (#\b #\c)
 
+(list->string '(#\a))
+;;=> "a"
+
+(list->string '(#\a #\b))
+;;=> "ab"
+
+(list->string '(#\a #\b #\c))
+;;=> "abc"
+
+(list->string '())
+;;=> ""
+
 
 #f
 #t

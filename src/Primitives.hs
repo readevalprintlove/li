@@ -119,6 +119,7 @@ listToString :: [LispVal] -> ThrowsError LispVal
 listToString [] = return $ String ""
 listToString [(List [Character c])] = return $ String [c]
 listToString [List chars] = mapM unpackchar chars >>= return . String
+listToString args = throwError $ BadArg "Bad arguments, should be ([char]*)" (List args)
 
 -- # predicates
 
