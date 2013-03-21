@@ -267,6 +267,11 @@ x
 (string-ref "abc" 1)
 ;;=> #\b
 
+(substring "abcd" 1 2)
+;;=> "bc"
+
+
+
 #f
 #t
 
