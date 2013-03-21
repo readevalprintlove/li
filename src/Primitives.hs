@@ -55,6 +55,7 @@ stringFun = [("string=?", str (==)),
              ("string-length", strLen),
              ("string", string),
              ("string-ref", stringRef),
+             ("substring", stringSlice),
              ("make-string", makeString)]
 
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
@@ -194,9 +195,9 @@ string chars = mapM unpackchar chars >>= return . String
 
 stringSlice :: [LispVal] -> ThrowsError LispVal
 stringSlice [String s, Number start, Number end] = do
-  let to = fromIntegral start
-  let from = fromIntegral end
-  return $ String (take (to - from + 1) (drop from s))
+  let from = fromIntegral start
+  let to = fromIntegral end
+  return $ String take to $ drop from $ s
 
 stringRef :: [LispVal] -> ThrowsError LispVal
 stringRef [String s, idx@(Number i)] = if ((fromIntegral i) > length s)
