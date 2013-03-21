@@ -109,6 +109,10 @@ stringToList [] = return $ List []
 stringToList [String chars] = return $ List (map Character chars)
 stringToList [String chars, Number i] = return $ List (map Character (slice chars i (toInteger (length chars))))
 stringToList [String chars, Number s, Number e] = return $ List (map Character (slice chars s e))
+stringToList args@[Number _, Number _, String _] = throwError $ BadArg "Argument order error, should be (str [num num])" (List args)
+stringToList args@[Number _, String _, Number _] = throwError $ BadArg "Argument order error, should be (str [num num])" (List args)
+stringToList args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str [num num])" (List args)
+stringToList args = throwError $ BadArg "Bad arguments, should be (str [num num])" (List args)
 
 -- # predicates
 
