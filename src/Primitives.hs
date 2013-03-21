@@ -212,3 +212,6 @@ stringRef [String "", n] = throwError $ BadArg "Cannot take from an empty string
 
 stringCat :: [LispVal] -> ThrowsError LispVal
 stringCat [] = return $ String ""
+stringCat [s@(String _)] = return s
+stringCat [(String l), (String r)] = return $ String (l ++ r)
+stringCat strs = (mapM unpackstr strs) >>= return . String . concat
