@@ -270,6 +270,20 @@ x
 (substring "abcd" 1 2)
 ;;=> "bc"
 
+(string-append "a" "b")
+;;=> "ab"
+
+(string-append "a" "b" "c")
+;;=> "abc"
+
+(string-append "a" "b" "c" "d")
+;;=> "abcd"
+
+(string-append "a")
+;;=> "a"
+
+(string-append)
+;;=> ""
 
 
 #f
