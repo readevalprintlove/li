@@ -192,6 +192,12 @@ string :: [LispVal] -> ThrowsError LispVal
 string [Character c] = return $ String [c]
 string chars = mapM unpackchar chars >>= return . String
 
+stringSlice :: [LispVal] -> ThrowsError LispVal
+stringSlice [String s, Number start, Number end] = do
+  let to = fromIntegral start
+  let from = fromIntegral end
+  return $ String (take (to - from + 1) (drop from s))
+
 stringRef :: [LispVal] -> ThrowsError LispVal
 stringRef [String s, idx@(Number i)] = if ((fromIntegral i) > length s)
                                           then throwError $ BadArg "String index out of bounds" idx
