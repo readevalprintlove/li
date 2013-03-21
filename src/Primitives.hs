@@ -74,7 +74,8 @@ predicates = [("symbol?",    unary fun_symbolp),
 convertors :: [(String, [LispVal] -> ThrowsError LispVal)]
 convertors = [("symbol->string", symbolToString),
               ("string->symbol", stringToSymbol),
-              ("string->list", stringToList)]
+              ("string->list", stringToList),
+              ("list->string", listToString)]
 
 
 globals :: IO Env
@@ -114,6 +115,8 @@ stringToList args@[Number _, String _, Number _] = throwError $ BadArg "Argument
 stringToList args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str [num num])" (List args)
 stringToList args = throwError $ BadArg "Bad arguments, should be (str [num num])" (List args)
 
+listToString :: [LispVal] -> ThrowsError LispVal
+listToString [] = return $ List []
 -- # predicates
 
 fun_emptyp, fun_symbolp, fun_numberp, fun_stringp, fun_boolp, fun_listp, fun_dottedp :: LispVal -> ThrowsError LispVal
