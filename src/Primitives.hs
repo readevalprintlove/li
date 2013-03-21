@@ -116,7 +116,10 @@ stringToList args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str
 stringToList args = throwError $ BadArg "Bad arguments, should be (str [num num])" (List args)
 
 listToString :: [LispVal] -> ThrowsError LispVal
-listToString [] = return $ List []
+listToString [] = return $ String ""
+listToString [(List [Character c])] = return $ String [c]
+listToString [List chars] = mapM unpackchar chars >>= return . String
+
 -- # predicates
 
 fun_emptyp, fun_symbolp, fun_numberp, fun_stringp, fun_boolp, fun_listp, fun_dottedp :: LispVal -> ThrowsError LispVal
