@@ -108,6 +108,7 @@ stringToList :: [LispVal] -> ThrowsError LispVal
 stringToList [] = return $ List []
 stringToList [String chars] = return $ List (map Character chars)
 stringToList [String chars, Number i] = return $ List (map Character (slice chars i (toInteger (length chars))))
+stringToList [String chars, Number s, Number e] = return $ List (map Character (slice chars s e))
 
 -- # predicates
 
