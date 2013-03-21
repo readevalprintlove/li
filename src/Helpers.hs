@@ -30,7 +30,7 @@ slice :: [a] -> Integer -> Integer -> [a]
 slice l s e = do
     let start = fromIntegral s
     let end   = fromIntegral e
-    (take start $ drop end $ l)
+    (take end $ drop start $ l)
 
 -- unpackers
 
