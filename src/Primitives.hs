@@ -107,9 +107,7 @@ stringToSymbol badArgList = throwError $ NumArgs 1 badArgList
 stringToList :: [LispVal] -> ThrowsError LispVal
 stringToList [] = return $ List []
 stringToList [String chars] = return $ List (map Character chars)
-stringToList [String chars, Number i] = do
-  let start = fromIntegral i
-  return $ List (map Character (drop ((length chars) - start) chars))
+stringToList [String chars, Number i] = return $ List (map Character (slice chars i (toInteger (length chars))))
 
 -- # predicates
 
