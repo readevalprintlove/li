@@ -56,6 +56,7 @@ stringFun = [("string=?", str (==)),
              ("string", string),
              ("string-ref", stringRef),
              ("substring", stringSlice),
+             ("string-append", stringCat),
              ("make-string", makeString)]
 
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
@@ -209,3 +210,5 @@ stringRef [String s, idx@(Number i)] = if ((fromIntegral i) > length s)
                                           else return $ Character (s!!(fromIntegral i))
 stringRef [String "", n] = throwError $ BadArg "Cannot take from an empty string" n
 
+stringCat :: [LispVal] -> ThrowsError LispVal
+stringCat [] = return $ String ""
