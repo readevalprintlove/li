@@ -201,6 +201,7 @@ stringSlice [String s, Number start, Number end] = do
 stringSlice args@[Number _, Number _, String _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 stringSlice args@[Number _, String _, Number _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 stringSlice args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str num num)" (List args)
+stringSlice args = throwError $ BadArg "Bad arguments, should be (str num num)" (List args)
 
 stringRef :: [LispVal] -> ThrowsError LispVal
 stringRef [String s, idx@(Number i)] = if ((fromIntegral i) > length s)
