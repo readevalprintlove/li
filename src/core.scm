@@ -285,6 +285,18 @@ x
 (string-append)
 ;;=> ""
 
+(string->list "")
+;;=> []
+
+(string->list "abcd")
+;;=> (#\a #\b #\c #\d)
+
+(string->list "abcd" 1)
+;;=> (#\b #\c #\d)
+
+(string->list "abcd" 1 2)
+;;=> (#\b #\c)
+
 
 #f
 #t
