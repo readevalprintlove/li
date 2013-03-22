@@ -67,6 +67,7 @@ predicates = [("symbol?",    unary fun_symbolp),
               ("number?",    unary fun_numberp),
               ("boolean?",   unary fun_boolp),
               ("list?",      unary fun_listp),
+              ("vector?",    unary fun_vectorp),
               ("pair?",      unary fun_dottedp),
               ("procedure?", unary fun_funp),
               ("zero?",      unary fun_zerop),
@@ -124,9 +125,11 @@ listToString args = throwError $ BadArg "Bad arguments, should be ([char]*)" (Li
 
 -- # predicates
 
-fun_emptyp, fun_symbolp, fun_numberp, fun_stringp, fun_boolp, fun_listp, fun_dottedp :: LispVal -> ThrowsError LispVal
+fun_emptyp, fun_symbolp, fun_vectorp, fun_numberp, fun_stringp, fun_boolp, fun_listp, fun_dottedp :: LispVal -> ThrowsError LispVal
 fun_listp   (List _)         = return $ Bool True
 fun_listp   _                = return $ Bool False
+fun_vectorp   (Vector _)     = return $ Bool True
+fun_vectorp   _              = return $ Bool False
 fun_dottedp (Dotted _ _)     = return $ Bool True
 fun_dottedp (List [])        = return $ Bool False
 fun_dottedp (List _)         = return $ Bool True
