@@ -55,6 +55,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
     (list-tail (cdr lst) (- k 1))))
 
 (define (list . elems) elems)
+(define (vector . elems) (list->vector elems))
 
 (define (list-ref lst k) (car (list-tail lst k)))
 
@@ -342,7 +343,8 @@ x
 (list->vector '(1 2 3))
 ;;=> #(1 2 3)
 
-
+(vector 'a 'b 'c)
+;;=> #(a b c)
 
 
 #f
