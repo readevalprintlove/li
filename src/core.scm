@@ -346,6 +346,22 @@ x
 (vector 'a 'b 'c)
 ;;=> #(a b c)
 
+(vector-length #())
+;;=> 0
+
+(vector-length #(1 3 3))
+;;=> 3
+
+(vector-length (make-vector 100))
+;;=> 100
+
+
+
+
+
+
+
+
 
 #f
 #t
