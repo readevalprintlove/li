@@ -150,7 +150,9 @@ vectorToList badArgs = throwError $ BadArg "Bad arguments, should be (vector)" (
 vectorToString :: [LispVal] -> ThrowsError LispVal
 vectorToString [] = return $ String ""
 vectorToString [Vector chars] = mapM unpackchar chars >>= return . String
-vectorToString args = throwError $ BadArg "Bad arguments, should be ([char]*)" (List args)
+vectorToString [Vector chars, Number i] = (mapM unpackchar (slice chars i (toInteger (length chars)))) >>= return . String
+vectorToString [Vector chars, Number s, Number e] = (mapM unpackchar (slice chars s (e - 1))) >>= return . String
+vectorToString args = throwError $ BadArg "Bad arguments, should be (#(char*))" (List args)
 
 
 -- # predicates
