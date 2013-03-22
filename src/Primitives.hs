@@ -244,10 +244,10 @@ stringCopy args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str n
 stringCopy args = throwError $ BadArg "Bad arguments, should be (str num num)" (List args)
 
 stringRef :: [LispVal] -> ThrowsError LispVal
+stringRef [s@(String ""), _] = throwError $ BadArg "Cannot take from an empty string" s
 stringRef [String s, idx@(Number i)] = if ((fromIntegral i) > length s)
                                           then throwError $ BadArg "String index out of bounds" idx
                                           else return $ Character (s!!(fromIntegral i))
-stringRef [String "", n] = throwError $ BadArg "Cannot take from an empty string" n
 
 stringCat :: [LispVal] -> ThrowsError LispVal
 stringCat [] = return $ String ""
@@ -269,7 +269,7 @@ vectorLen [Vector v] = return $ Number (fromIntegral (length v))
 vectorLen [badArg] = throwError $ TypeMismatch "vector" badArg
 
 vectorRef :: [LispVal] -> ThrowsError LispVal
-vectorRef [v@(Vector []), n] = throwError $ BadArg "Cannot take from an empty vector" v
+vectorRef [v@(Vector []), _] = throwError $ BadArg "Cannot take from an empty vector" v
 vectorRef [Vector s, idx@(Number i)] = if ((fromIntegral i) > length s)
                                           then throwError $ BadArg "Vector index out of bounds" idx
                                           else return (s!!(fromIntegral i))
