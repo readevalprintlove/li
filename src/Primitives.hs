@@ -141,7 +141,10 @@ vectorToList [] = return $ List []
 vectorToList [Vector vals] = return $ List vals
 vectorToList [Vector vals, Number i] = return $ List (slice vals i (toInteger (length vals)))
 vectorToList [Vector vals, Number s, Number e] = return $ List (slice vals s (e - 1))
-vectorToList badArgs = throwError $ BadArg "Bad arguments, should be (a-vector)" (List badArgs)
+vectorToList args@[Number _, Number _, Vector _] = throwError $ BadArg "Argument order error, should be (vector [num num])" (List args)
+vectorToList args@[Number _, Vector _, Number _] = throwError $ BadArg "Argument order error, should be (vector [num num])" (List args)
+vectorToList args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (vector [num num])" (List args)
+vectorToList badArgs = throwError $ BadArg "Bad arguments, should be (vector)" (List badArgs)
 
 
 -- # predicates
