@@ -373,7 +373,8 @@ x
 (vector->list '#(dah dah didah) 1 2)
 ;;=> (dah)
 
-
+(vector->string #(#\a #\b))
+;;=> "ab"
 
 
 
