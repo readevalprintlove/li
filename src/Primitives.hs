@@ -79,6 +79,9 @@ convertors = [("symbol->string", symbolToString),
               ("string->list", stringToList),
               ("list->string", listToString)]
 
+vectorFun :: [(String, [LispVal] -> ThrowsError LispVal)]
+vectorFun =  [("make-vector", makeVector)]
+
 
 globals :: IO Env
 globals = nullEnv >>= (flip bind $ map (funAs IOFunc) iofuns
@@ -242,3 +245,11 @@ stringCat [] = return $ String ""
 stringCat [s@(String _)] = return s
 stringCat [(String l), (String r)] = return $ String (l ++ r)
 stringCat strs = (mapM unpackstr strs) >>= return . String . concat
+
+-- # vectors
+
+makeVector :: [LispVal] -> ThrowsError LispVal
+makeVector [Number size, fill] = return $ Vector (take (fromIntegral size) (repeat fill))
+makeVector [Number size] = return $ Vector (take (fromIntegral size) (repeat (Number 0)))
+makeVector [] = throwError $ NumArgs 1 []
+makeVector badArgs = throwError $ TypeMismatch "list" (Vector badArgs)
