@@ -358,6 +358,16 @@ x
 (vector-ref '#(1 1 2 3 5 8 13 21) 5)
 ;;=> 8
 
+(vector->list #())
+;;=> ()
+
+(vector->list #(1 2 3))
+;;=> (1 2 3)
+
+(vector->list (make-vector 10 'a))
+;;=> (a a a a a a a a a a)
+
+
 
 
 
