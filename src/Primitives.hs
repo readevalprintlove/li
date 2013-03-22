@@ -78,6 +78,7 @@ convertors = [("symbol->string", symbolToString),
               ("string->symbol", stringToSymbol),
               ("string->list", stringToList),
               ("list->string", listToString),
+              ("vector->list", listToString),
               ("list->vector", listToVector)]
 
 vectorFun :: [(String, [LispVal] -> ThrowsError LispVal)]
@@ -134,6 +135,12 @@ listToVector :: [LispVal] -> ThrowsError LispVal
 listToVector [] = return $ Vector []
 listToVector [List vals] = return $ Vector vals
 listToVector badArgs = throwError $ BadArg "Bad arguments, should be (a-list)" (List badArgs)
+
+vectorToList :: [LispVal] -> ThrowsError LispVal
+vectorToList [] = return $ List []
+vectorToList [Vector vals] = return $ List vals
+vectorToList badArgs = throwError $ BadArg "Bad arguments, should be (a-vector)" (List badArgs)
+
 
 -- # predicates
 
