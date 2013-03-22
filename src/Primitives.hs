@@ -88,6 +88,7 @@ globals = nullEnv >>= (flip bind $ map (funAs IOFunc) iofuns
                                         ++ map (funAs PrimitiveFunc) primitives
                                         ++ map (funAs PrimitiveFunc) numerics
                                         ++ map (funAs PrimitiveFunc) stringFun
+                                        ++ map (funAs PrimitiveFunc) vectorFun
                                         ++ map (funAs PrimitiveFunc) convertors
                                         ++ map (funAs KFunc) evalfuns
                                         ++ map (funAs PrimitiveFunc) predicates)
