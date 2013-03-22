@@ -78,7 +78,7 @@ convertors = [("symbol->string", symbolToString),
               ("string->symbol", stringToSymbol),
               ("string->list", stringToList),
               ("list->string", listToString),
-              ("vector->list", listToString),
+              ("vector->list", vectorToList),
               ("list->vector", listToVector)]
 
 vectorFun :: [(String, [LispVal] -> ThrowsError LispVal)]
