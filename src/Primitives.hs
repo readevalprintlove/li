@@ -139,6 +139,7 @@ listToVector badArgs = throwError $ BadArg "Bad arguments, should be (a-list)" (
 vectorToList :: [LispVal] -> ThrowsError LispVal
 vectorToList [] = return $ List []
 vectorToList [Vector vals] = return $ List vals
+vectorToList [Vector vals, Number i] = return $ List (slice vals i (toInteger (length vals)))
 vectorToList badArgs = throwError $ BadArg "Bad arguments, should be (a-vector)" (List badArgs)
 
 
