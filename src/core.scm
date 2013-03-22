@@ -339,6 +339,8 @@ x
 (vector? (make-vector 5 'a))
 ;;=> #t
 
+(list->vector '(1 2 3))
+;;=> #(1 2 3)
 
 
 
