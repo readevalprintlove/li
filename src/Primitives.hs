@@ -77,7 +77,8 @@ convertors :: [(String, [LispVal] -> ThrowsError LispVal)]
 convertors = [("symbol->string", symbolToString),
               ("string->symbol", stringToSymbol),
               ("string->list", stringToList),
-              ("list->string", listToString)]
+              ("list->string", listToString),
+              ("list->vector", listToVector)]
 
 vectorFun :: [(String, [LispVal] -> ThrowsError LispVal)]
 vectorFun =  [("make-vector", makeVector)]
@@ -126,6 +127,11 @@ listToString [] = return $ String ""
 listToString [(List [Character c])] = return $ String [c]
 listToString [List chars] = mapM unpackchar chars >>= return . String
 listToString args = throwError $ BadArg "Bad arguments, should be ([char]*)" (List args)
+
+listToVector :: [LispVal] -> ThrowsError LispVal
+listToVector [] = return $ Vector []
+listToVector [List vals] = return $ Vector vals
+listToVector badArgs = throwError $ BadArg "Bad arguments, should be (a-list)" (List badArgs)
 
 -- # predicates
 
