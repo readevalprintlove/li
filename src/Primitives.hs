@@ -81,7 +81,8 @@ convertors = [("symbol->string", symbolToString),
               ("list->vector", listToVector)]
 
 vectorFun :: [(String, [LispVal] -> ThrowsError LispVal)]
-vectorFun =  [("make-vector", makeVector)]
+vectorFun =  [("make-vector", makeVector),
+              ("vector-length", vectorLen)]
 
 
 globals :: IO Env
@@ -260,3 +261,8 @@ makeVector [Number size, fill] = return $ Vector (take (fromIntegral size) (repe
 makeVector [Number size] = return $ Vector (take (fromIntegral size) (repeat (Number 0)))
 makeVector [] = throwError $ NumArgs 1 []
 makeVector badArgs = throwError $ TypeMismatch "list" (Vector badArgs)
+
+vectorLen :: [LispVal] -> ThrowsError LispVal
+vectorLen [Vector []] = return $ Number 0
+vectorLen [Vector v] = return $ Number (fromIntegral (length v))
+vectorLen [badArg] = throwError $ TypeMismatch "vector" badArg
