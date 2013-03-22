@@ -330,6 +330,14 @@ x
 (vector? '())
 ;;=> #f
 
+(make-vector 3)
+;;=> #(0 0 0)
+
+(make-vector 5 'a)
+;;=> #(a a a a a)
+
+(vector? (make-vector 5 'a))
+;;=> #t
 
 
 #f
