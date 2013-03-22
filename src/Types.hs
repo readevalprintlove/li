@@ -55,6 +55,7 @@ data DynamicWinders = DynamicWinders { before :: LispVal,
 data LispVal = Atom String
              | List [LispVal]
              | Dotted [LispVal] LispVal
+             | Vector [LispVal]
              | Vector (Array Int LispVal)
              | Number Integer
              | Environment Env
