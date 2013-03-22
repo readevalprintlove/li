@@ -376,6 +376,11 @@ x
 (vector->string #(#\a #\b))
 ;;=> "ab"
 
+(vector->string #(#\a #\b #\c) 1)
+;;=> "bc"
+
+(vector->string #(#\a #\b #\c) 1 2)
+;;=> "b"
 
 
 
