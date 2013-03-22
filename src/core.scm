@@ -367,6 +367,12 @@ x
 (vector->list (make-vector 10 'a))
 ;;=> (a a a a a a a a a a)
 
+(vector->list '#(dah dah didah) 1)
+;;=> (dah didah)
+
+
+
+
 
 
 
