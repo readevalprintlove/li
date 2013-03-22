@@ -269,7 +269,8 @@ vectorLen [Vector v] = return $ Number (fromIntegral (length v))
 vectorLen [badArg] = throwError $ TypeMismatch "vector" badArg
 
 vectorRef :: [LispVal] -> ThrowsError LispVal
+vectorRef [Vector [], n] = throwError $ BadArg "Cannot take from an empty vector" n
 vectorRef [Vector s, idx@(Number i)] = if ((fromIntegral i) > length s)
                                           then throwError $ BadArg "Vector index out of bounds" idx
                                           else return (s!!(fromIntegral i))
-vectorRef [Vector [], n] = throwError $ BadArg "Cannot take from an empty vector" n
+
