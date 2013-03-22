@@ -296,7 +296,7 @@ x
 ;;=> (#\b #\c #\d)
 
 (string->list "abcd" 1 2)
-;;=> (#\b #\c)
+;;=> (#\b)
 
 (list->string '(#\a))
 ;;=> "a"
@@ -370,6 +370,8 @@ x
 (vector->list '#(dah dah didah) 1)
 ;;=> (dah didah)
 
+(vector->list '#(dah dah didah) 1 2)
+;;=> (dah)
 
 
 
