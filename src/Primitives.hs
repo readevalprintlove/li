@@ -79,6 +79,7 @@ convertors = [("symbol->string", symbolToString),
               ("string->list", stringToList),
               ("list->string", listToString),
               ("vector->list", vectorToList),
+              ("vector->string", vectorToString),
               ("list->vector", listToVector)]
 
 vectorFun :: [(String, [LispVal] -> ThrowsError LispVal)]
@@ -145,6 +146,12 @@ vectorToList args@[Number _, Number _, Vector _] = throwError $ BadArg "Argument
 vectorToList args@[Number _, Vector _, Number _] = throwError $ BadArg "Argument order error, should be (vector [num num])" (List args)
 vectorToList args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (vector [num num])" (List args)
 vectorToList badArgs = throwError $ BadArg "Bad arguments, should be (vector)" (List badArgs)
+
+vectorToString :: [LispVal] -> ThrowsError LispVal
+vectorToString [] = return $ String ""
+vectorToString [(Vector [Character c])] = return $ String [c]
+vectorToString [Vector chars] = mapM unpackchar chars >>= return . String
+vectorToString args = throwError $ BadArg "Bad arguments, should be ([char]*)" (List args)
 
 
 -- # predicates
