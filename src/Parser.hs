@@ -169,6 +169,10 @@ parseExpr :: Parser LispVal
 parseExpr = lexeme parseString
           <|> lexeme parseCharacter
           <|> lexeme parseFenced
+          <|> do _ <- try (lexeme $ string "#(")
+                 x <- parseVector
+                 _ <- lexeme $ char ')'
+                 return x
           <|> lexeme parsePoundEscape
           <|> try parseAtom
           <|> try (lexeme parseFloat)
