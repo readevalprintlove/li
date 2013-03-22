@@ -155,6 +155,9 @@ parseDotted = do
     tail <- char '.' >> spaces >> parse'
     return $ Dotted head tail
 
+parseVector :: Parser LispVal
+parseVector = liftM Vector $ sepBy parse' spaces
+
 -- add 'quote support
 parseQuoted :: Parser LispVal
 parseQuoted = do
