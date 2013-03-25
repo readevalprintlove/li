@@ -128,9 +128,9 @@ stringToList args = throwError $ BadArg "Bad arguments, should be (str [num num]
 
 stringToVector :: [LispVal] -> ThrowsError LispVal
 stringToVector [] = return $ List []
-stringToVector [String chars] = return $ List (map Character chars)
-stringToVector [String chars, Number i] = return $ List (map Character (slice chars i (toInteger (length chars))))
-stringToVector [String chars, Number s, Number e] = return $ List (map Character (slice chars s (e - 1)))
+stringToVector [String chars] = return $ Vector (map Character chars)
+stringToVector [String chars, Number i] = return $ Vector (map Character (slice chars i (toInteger (length chars))))
+stringToVector [String chars, Number s, Number e] = return $ Vector (map Character (slice chars s (e - 1)))
 stringToVector args@[Number _, Number _, String _] = throwError $ BadArg "Argument order error, should be (str [num num])" (List args)
 stringToVector args@[Number _, String _, Number _] = throwError $ BadArg "Argument order error, should be (str [num num])" (List args)
 stringToVector args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str [num num])" (List args)
