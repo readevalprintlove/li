@@ -394,6 +394,9 @@ x
 (vector-copy #(1 2 3) 1 2)
 ;;=> #(2 3)
 
+(vector-append #(a b c) #(d e f))
+;;=> #(a b c d e f)
+
 
 
 
