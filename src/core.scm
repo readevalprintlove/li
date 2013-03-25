@@ -382,6 +382,8 @@ x
 (vector->string #(#\a #\b #\c) 1 2)
 ;;=> "b"
 
+(string->vector "abc")
+;;=> #(#\a #\b #\c)
 
 
 
