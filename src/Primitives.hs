@@ -77,6 +77,7 @@ convertors :: [(String, [LispVal] -> ThrowsError LispVal)]
 convertors = [("symbol->string", symbolToString),
               ("string->symbol", stringToSymbol),
               ("string->list", stringToList),
+              ("string->vector", stringToVector),
               ("list->string", listToString),
               ("vector->list", vectorToList),
               ("vector->string", vectorToString),
