@@ -308,7 +308,7 @@ vectorRef [Vector s, idx@(Number i)] = if ((fromIntegral i) > length s)
 vectorCopy :: [LispVal] -> ThrowsError LispVal
 vectorCopy [Vector s] = return $ Vector s
 vectorCopy [Vector s, Number start] = return $ Vector (slice s start (toInteger (length s)))
-vectorCopy [Cector s, Number start, Number end] = return $ Vector (slice s start end)
+vectorCopy [Vector s, Number start, Number end] = return $ Vector (slice s start end)
 vectorCopy args@[Number _, Number _, Vector _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 vectorCopy args@[Number _, Vector _, Number _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 vectorCopy args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str num num)" (List args)
