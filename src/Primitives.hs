@@ -269,7 +269,7 @@ stringSlice args = throwError $ BadArg "Bad arguments, should be (str num num)" 
 stringCopy :: [LispVal] -> ThrowsError LispVal
 stringCopy [String s] = return $ String s
 stringCopy [String s, Number start] = return $ String (slice s start (toInteger (length s)))
-stringCopy [String s, Number start, Number end] = return $ String (slice s start end)
+stringCopy [String s, Number start, Number end] = return $ String (slice s start (end - 1))
 stringCopy args@[Number _, Number _, String _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 stringCopy args@[Number _, String _, Number _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 stringCopy args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str num num)" (List args)
@@ -309,7 +309,7 @@ vectorRef [Vector s, idx@(Number i)] = if ((fromIntegral i) > length s)
 vectorCopy :: [LispVal] -> ThrowsError LispVal
 vectorCopy [Vector s] = return $ Vector s
 vectorCopy [Vector s, Number start] = return $ Vector (slice s start (toInteger (length s)))
-vectorCopy [Vector s, Number start, Number end] = return $ Vector (slice s start end)
+vectorCopy [Vector s, Number start, Number end] = return $ Vector (slice s start (end - 1))
 vectorCopy args@[Number _, Number _, Vector _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 vectorCopy args@[Number _, Vector _, Number _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 vectorCopy args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str num num)" (List args)

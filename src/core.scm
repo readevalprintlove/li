@@ -385,6 +385,18 @@ x
 (string->vector "abc")
 ;;=> #(#\a #\b #\c)
 
+(vector-copy #(1 2 3))
+;;=> #(1 2 3)
+
+(vector-copy #(1 2 3) 1)
+;;=> #(2 3)
+
+(vector-copy #(1 2 3) 1 2)
+;;=> #(2 3)
+
+
+
+
 
 
 
