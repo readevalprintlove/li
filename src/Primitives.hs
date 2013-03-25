@@ -87,7 +87,8 @@ vectorFun :: [(String, [LispVal] -> ThrowsError LispVal)]
 vectorFun =  [("make-vector", makeVector),
               ("vector-length", vectorLen),
               ("vector-ref", vectorRef),
-              ("vector-copy", vectorCopy)]
+              ("vector-copy", vectorCopy),
+              ("vector-append", vectorCat)]
 
 
 globals :: IO Env
