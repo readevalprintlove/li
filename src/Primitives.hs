@@ -57,7 +57,7 @@ stringFun = [("string=?", str (==)),
              ("string-ref", stringRef),
              ("substring", stringSlice),
              ("string-copy", stringCopy),
-             ("string-append", stringCat),
+             ("string-append", vectorCat),
              ("make-string", makeString)]
 
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
@@ -314,3 +314,9 @@ vectorCopy args@[Number _, Number _, Vector _] = throwError $ BadArg "Argument o
 vectorCopy args@[Number _, Vector _, Number _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 vectorCopy args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str num num)" (List args)
 vectorCopy args = throwError $ BadArg "Bad arguments, should be (str num num)" (List args)
+
+vectorCat :: [LispVal] -> ThrowsError LispVal
+vectorCat [] = return $ Vector []
+vectorCat [v@(Vector _)] = return v
+vectorCat [(Vector l), (Vector r)] = return $ Vector (l ++ r)
+vectorCat vecs = return $ Vector (concat (map pull vecs))

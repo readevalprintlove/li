@@ -36,6 +36,7 @@ slice l s e = do
 
 pull :: LispVal -> [LispVal]
 pull (List ary) = ary
+pull (Vector ary) = ary
 
 extricate :: ThrowsError a -> a
 extricate (Right val) = val
