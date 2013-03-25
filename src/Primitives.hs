@@ -86,7 +86,8 @@ convertors = [("symbol->string", symbolToString),
 vectorFun :: [(String, [LispVal] -> ThrowsError LispVal)]
 vectorFun =  [("make-vector", makeVector),
               ("vector-length", vectorLen),
-              ("vector-ref", vectorRef)]
+              ("vector-ref", vectorRef),
+              ("vector-copy", vectorCopy)]
 
 
 globals :: IO Env
