@@ -89,6 +89,9 @@ data LispVal = Atom String
 unwordsList :: [LispVal] -> String
 unwordsList = unwords . map showVal
 
+--unwordsByteString :: B.ByteString -> String
+--unwordsByteString = unwords . B.map showVal
+
 showVal :: LispVal -> String
 showVal (String contents) = "\"" ++ contents ++ "\""
 showVal (Character char) = "#\\" ++ [char] ++ ""
@@ -101,6 +104,7 @@ showVal (Bool True) = "#t"
 showVal (Bool False) = "#f"
 showVal (Environment env) = "<environment>"
 showVal (Vector contents) = "#(" ++ (unwordsList contents) ++ ")"
+showVal (Bytevector contents) = "#u8(" ++ (show contents) ++ ")"
 showVal (List contents) = "(" ++ (unwordsList contents) ++ ")"
 showVal (Dotted h t) = "(" ++ unwordsList h ++ " . " ++ showVal t ++ ")"
 showVal (PrimitiveFunc _) = "<primitive>"
