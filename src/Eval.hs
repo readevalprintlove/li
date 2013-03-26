@@ -56,6 +56,7 @@ eval env k val@(Ratio _) = continue env k val
 eval env k val@(Number _) = continue env k val
 eval env k val@(Bool _) = continue env k val
 eval env k val@(Vector _) = continue env k val
+eval env k val@(Bytevector _) = continue env k val
 eval env k (Atom id) = continue env k =<< getVar env id
 eval env _ (List [Atom "env"]) = return $ Environment env
 eval env k (List [Atom "quote", val]) = continue env k val
