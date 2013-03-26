@@ -161,9 +161,11 @@ parseVector :: Parser LispVal
 parseVector = liftM Vector $ sepBy parse' spaces
 
 parseBytevector :: Parser LispVal
-parseBytevector = return $ Bytevector (B.pack []) -- $ B.pack $ (mapM unpacknum (sepBy parse' spaces))
+parseBytevector = return $ Bytevector (B.pack [0, 255, 1])
 
--- add 'quote support
+-- (mapM unpackbyte (sepBy parse' spaces)) >>= return . Bytevector . B.pack
+-- mapM unpackchar chars >>= return . String
+
 parseQuoted :: Parser LispVal
 parseQuoted = do
    char '\''
