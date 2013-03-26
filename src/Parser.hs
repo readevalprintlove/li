@@ -158,6 +158,9 @@ parseDotted = do
 parseVector :: Parser LispVal
 parseVector = liftM Vector $ sepBy parse' spaces
 
+parseBytevector :: Parser LispVal
+parseBytevector = liftM Vector $ sepBy parse' spaces
+
 -- add 'quote support
 parseQuoted :: Parser LispVal
 parseQuoted = do
@@ -171,6 +174,10 @@ parseExpr = lexeme parseString
           <|> lexeme parseFenced
           <|> do _ <- try (lexeme $ string "#(")
                  x <- parseVector
+                 _ <- lexeme $ char ')'
+                 return x
+          <|> do _ <- try (lexeme $ string "#u8(")
+                 x <- parseBytevector
                  _ <- lexeme $ char ')'
                  return x
           <|> lexeme parsePoundEscape
