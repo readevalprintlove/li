@@ -35,6 +35,7 @@ import Data.IORef
 import Data.Array (Array (..))
 import Data.Ratio
 import Data.Complex
+import qualified Data.ByteString as B
 
 -- # Environment
 
@@ -56,6 +57,7 @@ data LispVal = Atom String
              | List [LispVal]
              | Dotted [LispVal] LispVal
              | Vector [LispVal]
+             | Bytevector B.ByteString
              | Number Integer
              | Environment Env
              | Ratio Rational
