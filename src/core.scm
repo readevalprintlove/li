@@ -382,6 +382,23 @@ x
 (vector->string #(#\a #\b #\c) 1 2)
 ;;=> "b"
 
+(string->vector "abc")
+;;=> #(#\a #\b #\c)
+
+(vector-copy #(1 2 3))
+;;=> #(1 2 3)
+
+(vector-copy #(1 2 3) 1)
+;;=> #(2 3)
+
+(vector-copy #(1 2 3) 1 2)
+;;=> #(2 3)
+
+(vector-append #(a b c) #(d e f))
+;;=> #(a b c d e f)
+
+
+
 
 
 

@@ -57,7 +57,7 @@ stringFun = [("string=?", str (==)),
              ("string-ref", stringRef),
              ("substring", stringSlice),
              ("string-copy", stringCopy),
-             ("string-append", stringCat),
+             ("string-append", vectorCat),
              ("make-string", makeString)]
 
 predicates :: [(String, [LispVal] -> ThrowsError LispVal)]
@@ -77,6 +77,7 @@ convertors :: [(String, [LispVal] -> ThrowsError LispVal)]
 convertors = [("symbol->string", symbolToString),
               ("string->symbol", stringToSymbol),
               ("string->list", stringToList),
+              ("string->vector", stringToVector),
               ("list->string", listToString),
               ("vector->list", vectorToList),
               ("vector->string", vectorToString),
@@ -85,7 +86,9 @@ convertors = [("symbol->string", symbolToString),
 vectorFun :: [(String, [LispVal] -> ThrowsError LispVal)]
 vectorFun =  [("make-vector", makeVector),
               ("vector-length", vectorLen),
-              ("vector-ref", vectorRef)]
+              ("vector-ref", vectorRef),
+              ("vector-copy", vectorCopy),
+              ("vector-append", vectorCat)]
 
 
 globals :: IO Env
@@ -125,6 +128,16 @@ stringToList args@[Number _, Number _, String _] = throwError $ BadArg "Argument
 stringToList args@[Number _, String _, Number _] = throwError $ BadArg "Argument order error, should be (str [num num])" (List args)
 stringToList args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str [num num])" (List args)
 stringToList args = throwError $ BadArg "Bad arguments, should be (str [num num])" (List args)
+
+stringToVector :: [LispVal] -> ThrowsError LispVal
+stringToVector [] = return $ List []
+stringToVector [String chars] = return $ Vector (map Character chars)
+stringToVector [String chars, Number i] = return $ Vector (map Character (slice chars i (toInteger (length chars))))
+stringToVector [String chars, Number s, Number e] = return $ Vector (map Character (slice chars s (e - 1)))
+stringToVector args@[Number _, Number _, String _] = throwError $ BadArg "Argument order error, should be (str [num num])" (List args)
+stringToVector args@[Number _, String _, Number _] = throwError $ BadArg "Argument order error, should be (str [num num])" (List args)
+stringToVector args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str [num num])" (List args)
+stringToVector args = throwError $ BadArg "Bad arguments, should be (str [num num])" (List args)
 
 listToString :: [LispVal] -> ThrowsError LispVal
 listToString [] = return $ String ""
@@ -257,7 +270,7 @@ stringSlice args = throwError $ BadArg "Bad arguments, should be (str num num)" 
 stringCopy :: [LispVal] -> ThrowsError LispVal
 stringCopy [String s] = return $ String s
 stringCopy [String s, Number start] = return $ String (slice s start (toInteger (length s)))
-stringCopy [String s, Number start, Number end] = return $ String (slice s start end)
+stringCopy [String s, Number start, Number end] = return $ String (slice s start (end - 1))
 stringCopy args@[Number _, Number _, String _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 stringCopy args@[Number _, String _, Number _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
 stringCopy args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str num num)" (List args)
@@ -294,3 +307,17 @@ vectorRef [Vector s, idx@(Number i)] = if ((fromIntegral i) > length s)
                                           then throwError $ BadArg "Vector index out of bounds" idx
                                           else return (s!!(fromIntegral i))
 
+vectorCopy :: [LispVal] -> ThrowsError LispVal
+vectorCopy [Vector s] = return $ Vector s
+vectorCopy [Vector s, Number start] = return $ Vector (slice s start (toInteger (length s)))
+vectorCopy [Vector s, Number start, Number end] = return $ Vector (slice s start (end - 1))
+vectorCopy args@[Number _, Number _, Vector _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
+vectorCopy args@[Number _, Vector _, Number _] = throwError $ BadArg "Argument order error, should be (str num num)" (List args)
+vectorCopy args@[_, _, _] = throwError $ BadArg "Bad arguments, should be (str num num)" (List args)
+vectorCopy args = throwError $ BadArg "Bad arguments, should be (str num num)" (List args)
+
+vectorCat :: [LispVal] -> ThrowsError LispVal
+vectorCat [] = return $ Vector []
+vectorCat [v@(Vector _)] = return v
+vectorCat [(Vector l), (Vector r)] = return $ Vector (l ++ r)
+vectorCat vecs = return $ Vector (concat (map pull vecs))
