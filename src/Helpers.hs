@@ -20,6 +20,7 @@ module Helpers
 where
 import Types
 import Control.Monad.Error
+import Data.Word
 
 trap action = catchError action (return . show)
 
@@ -56,6 +57,10 @@ unpacknum :: LispVal -> ThrowsError Integer
 unpacknum (Number n) = return n
 unpacknum (List [n]) = unpacknum n
 unpacknum notNum = throwError $ TypeMismatch "number" notNum
+
+unpackbyte :: LispVal -> ThrowsError Word8
+unpackbyte (Number n) = return (fromIntegral n)
+unpackbyte notNum = throwError $ TypeMismatch "number" notNum
 
 -- function type builders
 

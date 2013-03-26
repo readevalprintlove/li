@@ -30,6 +30,8 @@ import qualified Text.Parsec.Token as P
 import Types
 import Debug.Trace
 import Helpers
+import qualified Data.ByteString as B
+import Data.Word
 
 -- The set of characters allowed within identifiers
 
@@ -159,7 +161,7 @@ parseVector :: Parser LispVal
 parseVector = liftM Vector $ sepBy parse' spaces
 
 parseBytevector :: Parser LispVal
-parseBytevector = liftM Vector $ sepBy parse' spaces
+parseBytevector = return $ Bytevector (B.pack []) -- $ B.pack $ (mapM unpacknum (sepBy parse' spaces))
 
 -- add 'quote support
 parseQuoted :: Parser LispVal
